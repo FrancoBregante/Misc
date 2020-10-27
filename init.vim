@@ -13,5 +13,6 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'jparise/vim-graphql'
 Plug 'dense-analysis/ale'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
