@@ -2686,9 +2686,6 @@ endif
 let &cpo = s:cpo_save
 unlet s:cpo_save
 
-set number relativenumber
-set nu rnu
-
 map <C-l> :NERDTreeToggle<CR>
 
 hi CocInfoFloat ctermfg=121 gui=bold guifg=Green 
@@ -2730,6 +2727,8 @@ map <C-s> :Files<CR>
 
 set foldmethod=syntax
 
-highlight ALEError ctermbg=none cterm=underline
-highlight ALEWarning ctermbg=none cterm=underline
+highlight ALEError ctermbg=52
+highlight ALEWarning ctermbg=130 
 
+:set number relativenumber
+:set nu rnu
