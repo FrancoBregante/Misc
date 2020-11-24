@@ -1,5 +1,6 @@
 call plug#begin()
 
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
@@ -11,9 +12,13 @@ Plug 'stsewd/fzf-checkout.vim'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'gruvbox-community/gruvbox'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'luochen1990/rainbow'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -21,27 +26,22 @@ set cot=menuone,noinsert,noselect shm+=c
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-if (has("termguicolors"))
- set termguicolors
+" Important!!
+if has('termguicolors')
+  set termguicolors
 endif
 
-let g:gruvbox_termcolors=256
+let g:gruvbox_italic = 1
+let g:gruvbox_termcolors = 256
+
+
+colorscheme gruvbox
 
 syntax enable
 syntax on
 
-set background=dark
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_invert_selection='0'
-
-colorscheme gruvbox
-
-let g:airline_theme = 'base16_gruvbox_dark_hard'
-
 let g:completion_confirm_key = "\<C-y>"
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-
-command! Format execute 'lua vim.lsp.buf.formatting()'
 
 hi Pmenu ctermfg=121 gui=bold ctermbg=0
 hi PmenuSel ctermfg=0 gui=bold ctermbg=121
@@ -68,7 +68,7 @@ set shortmess+=c
 :lua << EOF
   local lspconfig = require('lspconfig')
   local on_attach = function(_, bufnr)
-    require('completion').on_attach()
+    require'completion'.on_attach()
     local opts = { noremap=true, silent=true }
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -111,3 +111,7 @@ set foldenable
 set foldnestmax=2
 set foldmethod=indent
 set noshowmode
+
+let g:rainbow_active = 1
+
+let g:deoplete#enable_at_startup = 1
