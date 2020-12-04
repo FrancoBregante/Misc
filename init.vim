@@ -14,13 +14,17 @@ Plug 'SirVer/ultisnips'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-Plug 'luochen1990/rainbow'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'dense-analysis/ale'
+Plug 'tpope/vim-rails'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
+Plug 'Shougo/deoplete-lsp'
+  
 call plug#end()
+
+let g:deoplete#enable_at_startup = 1
 
 set cot=menuone,noinsert,noselect shm+=c
 
@@ -79,7 +83,7 @@ set shortmess+=c
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
-  local servers = {'jsonls', 'clangd', 'rust_analyzer', 'cssls', 'html', 'tsserver'}
+  local servers = {'jsonls', 'clangd', 'cssls', 'html', 'tsserver', 'solargraph', 'omnisharp'}
   for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup{
       on_attach=on_attach,
@@ -100,8 +104,6 @@ EOF
 :lua << EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- This is similar to:
-    -- "let g:diagnostic_insert_delay = 1"
     update_in_insert = true,
   }
 )
@@ -111,7 +113,3 @@ set foldenable
 set foldnestmax=2
 set foldmethod=indent
 set noshowmode
-
-let g:rainbow_active = 1
-
-let g:deoplete#enable_at_startup = 1
