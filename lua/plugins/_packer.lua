@@ -91,9 +91,16 @@ if ok then
     use { 'honza/vim-snippets', opt = false }
     use { 'SirVer/ultisnips', opt = false }
     use { 'tpope/vim-surround', opt = false }
-    use {'nvim-treesitter/nvim-treesitter', opt = true} -- better syntax highlighting
-    use {'nvim-treesitter/playground', opt = true} -- playground for treesitter
+    use {'Shougo/deoplete.nvim', opt = false}
+    use {'Shougo/deoplete-lsp', opt = false}
+    use {'dense-analysis/ale', opt = false}
+    use {'tpope/vim-rails', opt = false}
+    vim.cmd('let g:deoplete#enable_at_startup = 1')
+    use {'nvim-treesitter/nvim-treesitter', opt = false} -- better syntax highlighting
+    use {'nvim-treesitter/playground', opt = false} -- playground for treesitter
   end
+
 
   return packer.startup(plugins)
 end
+

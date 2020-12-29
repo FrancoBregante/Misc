@@ -38,3 +38,4 @@ require("modules._statusline")
 require("modules.lsp")
 
 require("plugins._treesitter")
+

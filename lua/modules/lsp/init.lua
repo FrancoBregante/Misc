@@ -143,6 +143,17 @@ nvim_lsp.sumneko_lua.setup{
 nvim_lsp.solargraph.setup{
   on_attach = custom_on_attach,
   on_init = custom_on_init,
+  settings = {
+    solargraph = {
+      autoformat = true,
+    },
+  },
+
+}
+
+nvim_lsp.pyright.setup{
+  on_attach = custom_on_attach,
+  on_init = custom_on_init,
 }
 
 nvim_lsp.pyls.setup{
