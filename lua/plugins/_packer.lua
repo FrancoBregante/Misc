@@ -16,7 +16,7 @@ if ok then
 
   local plugins = function()
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim', opt = false}
 
     use {'gruvbox-community/gruvbox', opt = false} -- nice colorscheme
     use {'cohama/lexima.vim', opt = false} -- autopairs brackets, braces etc
@@ -24,26 +24,26 @@ if ok then
     use {
       'neoclide/jsonc.vim',
       ft = {'jsonc'},
-      opt = true
+      opt = false
     } -- jsonc highlighting
     use {'norcalli/nvim-colorizer.lua', opt = false} -- colorize hex/rgb/hsl value
     use {
       'dhruvasagar/vim-table-mode',
       ft = {'txt', 'markdown'},
-      opt = true,
+      opt = false,
     } -- table alignment
     use {
       'akinsho/nvim-bufferline.lua',
-      opt = true,
+      opt = false,
       requires = {
-        {'kyazdani42/nvim-web-devicons', opt = true}
+        {'kyazdani42/nvim-web-devicons', opt = false}
       }
     } -- snazzy bufferline
-    use {'neovim/nvim-lspconfig', opt = true} -- builtin lsp config
+    use {'neovim/nvim-lspconfig', opt = false} -- builtin lsp config
     use {
       'mattn/emmet-vim',
       cmd = 'EmmetInstall',
-      opt = true
+      opt = false
     } -- less typing for html code
     use {
       'nvim-telescope/telescope.nvim',
@@ -54,37 +54,37 @@ if ok then
     } -- extensible fuzzy finder
     use {
       'kyazdani42/nvim-tree.lua',
-      opt = true,
+      opt = false,
       requires = {
-        {'kyazdani42/nvim-web-devicons', opt = true}
+        {'kyazdani42/nvim-web-devicons', opt = false}
       },
     } -- super fast file tree viewer
     use {
       'nvim-telescope/telescope-fzy-native.nvim',
-      opt = true,
+      opt = false,
       requires = {
         {'nvim-telescope/telescope.nvim'}
       }
     } -- faster sorter algo for telescope
     use {
       'hrsh7th/nvim-compe',
-      opt = true,
+      opt = false,
       requires = {
         {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
         {'hrsh7th/vim-vsnip-integ'} -- integration with vim-vsnip
       },
     } -- completion framework
-    use {'lewis6991/gitsigns.nvim', opt = true} -- show git stuff in signcolumn
+    use {'lewis6991/gitsigns.nvim', opt = false} -- show git stuff in signcolumn
     use {
       'rhysd/git-messenger.vim',
       cmd = 'GitMessenger',
-      opt = true
+      opt = false
     } -- sort of like git blame but in floating window
     use { 'machakann/vim-sandwich', opt = false } -- surround words with symbol
     use {
       'mhinz/vim-sayonara',
       cmd = 'Sayonara',
-      opt = true
+      opt = false
     } -- better window and buffer management
     use { 'brooth/far.vim', opt = false } -- project wide search and replace
     use { 'tpope/vim-fugitive', opt = false } -- git helpers inside neovim
