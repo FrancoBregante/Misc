@@ -122,7 +122,12 @@ nvim_lsp.efm.setup{
   }
 }
 
+local system_name = "Linux"
+local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'
+local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+
 nvim_lsp.sumneko_lua.setup{
+  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
   on_attach = custom_on_attach,
   on_init = custom_on_init,
   settings = {
@@ -134,6 +139,12 @@ nvim_lsp.sumneko_lua.setup{
         globals = {
           "vim", "describe", "it", "before_each", "after_each",
           "awesome", "theme", "client"
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+          },
         },
       },
     }
@@ -151,12 +162,21 @@ nvim_lsp.solargraph.setup{
 
 }
 
+
 nvim_lsp.pyright.setup{
   on_attach = custom_on_attach,
   on_init = custom_on_init,
 }
 
+
 nvim_lsp.pyls.setup{
+  on_attach = custom_on_attach,
+  on_init = custom_on_init,
+}
+
+
+nvim_lsp.pyls_ms.setup{
+  cmd = { "dotnet", "exec", "/home/francob/python-language-server/output/bin/Debug/Microsoft.Python.LanguageServer.dll" },
   on_attach = custom_on_attach,
   on_init = custom_on_init,
 }
