@@ -63,10 +63,10 @@ if ok then
     use {
       'hrsh7th/nvim-compe',
       opt = false,
-      requires = {
-        {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
-        {'hrsh7th/vim-vsnip-integ'} -- integration with vim-vsnip
-      },
+      -- requires = {
+      --   {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
+      --   {'hrsh7th/vim-vsnip-integ'} -- integration with vim-vsnip
+      -- },
     } -- completion framework
     use {'lewis6991/gitsigns.nvim', opt = false} -- show git stuff in signcolumn
     use {

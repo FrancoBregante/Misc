@@ -180,3 +180,10 @@ nvim_lsp.pyls_ms.setup{
   on_attach = custom_on_attach,
   on_init = custom_on_init,
 }
+
+
+-- nvim_lsp.sqlls.setup{
+--   cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
+--   on_attach = custom_on_attach,
+--   on_init = custom_on_init,
+-- }
