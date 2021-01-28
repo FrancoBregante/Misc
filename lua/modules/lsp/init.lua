@@ -65,63 +65,6 @@ nvim_lsp.gopls.setup{
   root_dir = function() return vim.loop.cwd() end,
 }
 
-local eslint = {
-  lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-  lintIgnoreExitCode = true,
-  lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
-  rootMarkers = {
-    "package.json",
-    ".eslintrc.js",
-    ".eslintrc.yaml",
-    ".eslintrc.yml",
-    ".eslintrc.json",
-  }
-}
-
-local prettier = {
-  formatCommand = (
-    function()
-      if not vim.fn.empty(vim.fn.glob(vim.loop.cwd() .. '/.prettierrc')) then
-        return "prettier --config ./.prettierrc"
-      else
-        return "prettier --config ~/.config/nvim/.prettierrc"
-      end
-    end
-  )()
-}
-
-local gofmt= {
-  formatCommand = "gofmt"
-}
-
-local rustfmt = {
-  formatCommand = "rustfmt --emit=stdout"
-}
-
-nvim_lsp.efm.setup{
-  cmd = {"efm-langserver"},
-  on_attach = function(client)
-    client.resolved_capabilities.rename = false
-    client.resolved_capabilities.hover = false
-  end,
-  on_init = custom_on_init,
-  init_options = { documentFormatting = true },
-  settings = {
-    rootMarkers = {vim.loop.cwd()},
-    languages = {
-      javascript = { eslint, prettier },
-      typescript = { eslint, prettier },
-      typescriptreact = { eslint, prettier },
-      html = { prettier },
-      css = { prettier },
-      jsonc = { prettier },
-      go = { gofmt },
-      rust = { rustfmt },
-    }
-  }
-}
-
 local system_name = "Linux"
 local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
@@ -157,19 +100,15 @@ nvim_lsp.solargraph.setup{
   settings = {
     solargraph = {
       autoformat = true,
+      completion = true,
+      commandPath = '/home/francob/.gem/ruby/2.7.0/bin/solargraph',
+      diagnostics = true
     },
   },
-
 }
 
 
 nvim_lsp.pyright.setup{
-  on_attach = custom_on_attach,
-  on_init = custom_on_init,
-}
-
-
-nvim_lsp.pyls.setup{
   on_attach = custom_on_attach,
   on_init = custom_on_init,
 }
@@ -182,8 +121,8 @@ nvim_lsp.pyls_ms.setup{
 }
 
 
--- nvim_lsp.sqlls.setup{
---   cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
---   on_attach = custom_on_attach,
---   on_init = custom_on_init,
--- }
+nvim_lsp.sqlls.setup{
+  cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
+  on_attach = custom_on_attach,
+  on_init = custom_on_init,
+}

@@ -11,10 +11,10 @@ require'compe'.setup {
   incomplete_delay = 400;
   allow_prefix_unmatch = false;
   source = {
-    path = true;
-    nvim_lsp = true;
     deoplete = true;
+    nvim_lsp = true;
     vsnip = true;
+    path = true;
     buffer = true;
   };
 }

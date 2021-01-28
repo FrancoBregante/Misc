@@ -63,10 +63,10 @@ if ok then
     use {
       'hrsh7th/nvim-compe',
       opt = false,
-      -- requires = {
-      --   {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
-      --   {'hrsh7th/vim-vsnip-integ'} -- integration with vim-vsnip
-      -- },
+      requires = {
+        {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
+        {'hrsh7th/vim-vsnip-integ'} -- integration with vim-vsnip
+      },
     } -- completion framework
     use {'lewis6991/gitsigns.nvim', opt = false} -- show git stuff in signcolumn
     use {
@@ -82,13 +82,12 @@ if ok then
     } -- better window and buffer management
     use { 'brooth/far.vim', opt = false } -- project wide search and replace
     use { 'tpope/vim-fugitive', opt = false } -- git helpers inside neovim
-    use { 'honza/vim-snippets', opt = false }
-    use { 'SirVer/ultisnips', opt = false }
     use { 'tpope/vim-surround', opt = false }
     use { 'dense-analysis/ale', opt = false }
+    use { 'ngmy/vim-rubocop', opt = false }
     use { 'tpope/vim-rails', opt = false }
     use { 'nvim-treesitter/nvim-treesitter', opt = false } -- better syntax highlighting
-    use { 'nvim-treesitter/playground', opt = true } -- playground for treesitter
+    use { 'nvim-treesitter/playground', opt = false } -- playground for treesitter
     use {'Shougo/deoplete.nvim', opt = false}
     use {'Shougo/deoplete-lsp', opt = false}
     vim.cmd('let g:deoplete#enable_at_startup = 1')
