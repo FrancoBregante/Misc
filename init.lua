@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- prevent typo when pressing `wq` or `q`
 vim.cmd[[
   cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
@@ -12,30 +15,27 @@ vim.cmd("cd %:p:h")
 -- load plugin manager first
 require("plugins._packer")
 
--- basic settings
+-- load modules
 require("modules._settings")
 require("modules._others")
 require("modules._appearances")
 require("modules._util")
+require("modules._mappings")
+require("modules._statusline")
 
 -- plugins config
-require("plugins._luatree")
+require("plugins._nvimtree")
 require("plugins._bufferline")
 require("plugins._emmet")
-require("plugins._indentline")
+-- require("plugins._indentline")
+require("plugins._kommentary")
 require("plugins._gitsigns")
 require("plugins._completion")
 require("plugins._telescope")
+require("plugins._treesitter")
 
 -- highlight bg according to hex/rgb/rgba text
 require"colorizer".setup{}
 
--- load modules
-require("modules._mappings")
-require("modules._statusline")
-
 -- lsp stuff
 require("modules.lsp")
-
-require("plugins._treesitter")
-

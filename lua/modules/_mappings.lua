@@ -10,9 +10,12 @@ remap('i', 'JJ', '<Esc><Esc>', { noremap = true })
 -- toggle luatree
 remap('n', '<C-n>', '<CMD>NvimTreeToggle<CR>', { noremap = true })
 
+-- hippity hoppity your word is not my property
+remap('n', "<Leader>w", "<CMD>HopWord<CR>", { noremap = true })
+
 -- toggle telescope.nvim
--- remap('n', '<C-p>', '<CMD>Telescope find_files<CR>', { noremap = true, silent = true })
-remap('n', '<C-p>', "<CMD>lua require('telescope.builtin').find_files()<CR>", { noremap = true, silent = true })
+remap('n', '<C-p>', "<CMD>lua require('plugins._telescope').files()<CR>", { noremap = true, silent = true })
+-- remap('n', '<C-f>', "<CMD>lua require('plugins._telescope').grep_prompt()<CR>", { noremap = true, silent = true })
 
 -- better movement between windows
 remap('n', '<C-h>', '<C-w><C-h>', { noremap = true })

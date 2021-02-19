@@ -1,10 +1,15 @@
 vim.cmd[[packadd nvim-lspconfig]]
+vim.cmd[[packadd lspsaga.nvim]]
 
-local nvim_lsp = require('lspconfig')
-local mappings = require('modules.lsp._mappings')
+local nvim_lsp = require("lspconfig")
+local mappings = require("modules.lsp._mappings")
+local is_cfg_present = require("modules._util").is_cfg_present
 
-require('modules.lsp._custom_handlers') -- override hover callback
-require('modules.lsp._diagnostic') -- diagnostic stuff
+require("modules.lsp._diagnostic") -- diagnostic stuff
+
+require"lspsaga".init_lsp_saga({
+  border_style = 1,
+}) -- initialise lspsaga UI
 
 local custom_on_attach = function(client)
   mappings.lsp_mappings()
@@ -15,7 +20,14 @@ local custom_on_attach = function(client)
 end
 
 local custom_on_init = function()
-  print('Language Server Protocol started!')
+  print("Language Server Protocol started!")
+end
+
+local custom_capabilities = function()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true;
+
+  return capabilities
 end
 
 nvim_lsp.tsserver.setup{
@@ -26,17 +38,9 @@ nvim_lsp.tsserver.setup{
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     end
-
-    client.resolved_capabilities.document_formatting = false
   end,
   on_init = custom_on_init,
-  root_dir = function() return vim.loop.cwd() end,
-  settings = {
-    javascript = {
-      suggest = { enable = false },
-      validate = { enable = false }
-    }
-  }
+  root_dir = vim.loop.cwd,
 }
 
 nvim_lsp.html.setup{
@@ -59,14 +63,8 @@ nvim_lsp.clangd.setup{
   on_init = custom_on_init
 }
 
-nvim_lsp.gopls.setup{
-  on_attach = custom_on_attach,
-  on_init = custom_on_init,
-  root_dir = function() return vim.loop.cwd() end,
-}
-
 local system_name = "Linux"
-local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'
+local sumneko_root_path = '/home/francisl/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 nvim_lsp.sumneko_lua.setup{
@@ -115,14 +113,8 @@ nvim_lsp.pyright.setup{
 
 
 nvim_lsp.pyls_ms.setup{
-  cmd = { "dotnet", "exec", "/home/francob/python-language-server/output/bin/Debug/Microsoft.Python.LanguageServer.dll" },
+  cmd = { "dotnet", "exec", "/home/francisl/python-language-server/output/bin/Debug/Microsoft.Python.LanguageServer.dll" },
   on_attach = custom_on_attach,
   on_init = custom_on_init,
 }
 
-
-nvim_lsp.sqlls.setup{
-  cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
-  on_attach = custom_on_attach,
-  on_init = custom_on_init,
-}

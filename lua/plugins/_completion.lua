@@ -2,48 +2,55 @@ vim.cmd[[packadd nvim-compe]]
 
 local remap = vim.api.nvim_set_keymap
 
+vim.g.vsnip_snippet_dir = vim.fn.stdpath("config").."/snippets"
+
 require'compe'.setup {
-  enabled = true;
-  debug = false;
-  min_length = 2;
-  preselect = "disable";
-  source_timeout = 200;
-  incomplete_delay = 400;
-  allow_prefix_unmatch = false;
+  enabled = true,
+  debug = false,
+  min_length = 2,
+  preselect = "disable",
+  source_timeout = 200,
+  incomplete_delay = 400,
+  allow_prefix_unmatch = false,
+
   source = {
-    deoplete = true;
-    nvim_lsp = true;
-    vsnip = true;
-    path = true;
-    buffer = true;
-  };
+    path = true,
+    calc = true,
+    buffer = true,
+    vsnip = true,
+    nvim_lsp = true,
+    nvim_lua = true,
+  },
 }
 
--- needs to be here, otherwise `check_html_char` wouldn't work
-vim.g.no_default_rules = 1
-vim.g.lexima_accept_pum_with_enter = 1
-vim.fn["lexima#set_default_rules"]()
+require"compe.pattern".set_filetype_config('javascript', {
+  keyword_pattern = [[\%(@\w*\|\h\w*\)]];
+})
 
--- check prev character, depending on previous char
--- it will do special stuff or just `<CR>`
--- i.e: accept completion item, indent html, autoindent braces/etc, just enter
-remap(
-  'i', '<CR>',
-  table.concat{
-  'pumvisible()',
-  '? complete_info()["selected"] != "-1"',
-  '? compe#confirm(lexima#expand("<LT>CR>", "i"))',
-  ': "<C-g>u".lexima#expand("<LT>CR>", "i")',
-  ': v:lua.Util.check_html_char() ? lexima#expand("<LT>CR>", "i")."<ESC>O"',
-  ': lexima#expand("<LT>CR>", "i")'
-  },
-  { silent = true, expr = true }
-)
+local npairs = require('nvim-autopairs')
+Util.trigger_completion = function()
+  if vim.fn.pumvisible() ~= 0  then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      return vim.fn["compe#confirm"]()
+    end
 
--- cycle tab or insert tab depending on prev char
+    vim.fn.nvim_select_popupmenu_item(0 , false , false ,{})
+    P(vim.fn["compe#confirm"]())
+    return vim.fn["compe#confirm"]()
+  end
+
+  return npairs.check_break_line_char()
+end
+
+remap('i', '<CR>', 'v:lua.Util.trigger_completion()', { expr = true, silent = true })
 remap(
   'i', '<Tab>',
-  'pumvisible() ? "<C-n>" : v:lua.Util.check_backspace() ? "<Tab>" : compe#confirm(lexima#expand("<LT>CR>", "i"))',
+  table.concat{
+    'pumvisible() ? "<C-n>" : v:lua.Util.check_backspace()',
+    '? "<Tab>" : compe#confirm()',
+  },
   { silent = true, noremap = true, expr = true }
 )
+
 remap('i', '<S-Tab>', 'pumvisible() ? "<C-p>" : "<S-Tab>"', { noremap = true, expr = true })
+remap('i', '<C-Space>', 'compe#complete()', { noremap = true, expr = true, silent = true })

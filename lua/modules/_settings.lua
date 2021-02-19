@@ -41,7 +41,7 @@ local options = {
 
   -- String value
   backupcopy = "yes", -- fix weirdness for postcss
-  completeopt = 'menu,menuone,noinsert,noselect', -- better completion
+  completeopt = 'menu,menuone,noselect,noinsert', -- better completion
   encoding = "UTF-8", -- set encoding
   fillchars = "vert:│,eob:\\ ", -- make vertical split sign better
   foldmethod = "marker", -- foldmethod using marker
@@ -52,6 +52,7 @@ local options = {
   signcolumn = "yes", -- enable sign column all the time, 4 column
 
   -- Number value
+  colorcolumn = 80, -- 80 chars color column
   laststatus = 2, -- always enable statusline
   pumheight = 10, -- limit completion items
   re = 0, -- set regexp engine to auto
@@ -61,7 +62,7 @@ local options = {
   sidescrolloff = 15, -- make scrolling better
   synmaxcol = 300, -- set limit for syntax highlighting in a single line
   tabstop = 2, -- tabsize
-  timeoutlen = 500, -- faster timeout wait time
+  timeoutlen = 400, -- faster timeout wait time
   updatetime = 100, -- set faster update time
 }
 
