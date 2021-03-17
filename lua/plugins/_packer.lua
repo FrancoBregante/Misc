@@ -100,6 +100,10 @@ if ok then
     use { 'Shougo/deoplete.nvim', opt = false }
     use { 'Shougo/deoplete-lsp', opt = false }
     vim.cmd('let g:deoplete#enable_at_startup = 1')
+    use {'phaazon/hop.nvim', opt = false} -- easymotion but better
+    use {'tami5/sql.nvim', opt = false}
+    use {'AndrewRadev/splitjoin.vim', opt = false}
+    use {'TimUntersberger/neogit', opt = false}
   end
 
 

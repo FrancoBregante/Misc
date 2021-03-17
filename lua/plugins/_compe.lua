@@ -69,25 +69,3 @@ remap(
   "compe#complete()",
   { noremap = true, expr = true, silent = true }
 )
-
--- TODO(elianiva): REVISIT THIS LATER
--- inoremap{'<CR>', function() return Util.trigger_completion() end, { silent = true }}
---
--- local f = function(cmd)
---   return vim.api.nvim_feedkeys(
---     vim.api.nvim_replace_termcodes(cmd, true, true, true), 'n', true
---   )
--- end
---
--- inoremap{'<Tab>', function()
---   if vim.fn.pumvisible ~= 0 then return f('<C-n>') end
---   if Util.check_backspace() then return f('<Tab>') end
---   return f(vim.fn['compe#confirm']())
--- end, { silent = true }}
---
--- inoremap{'<S-Tab>', function()
---   if vim.fn.pumvisible ~= 0 then return f('<C-p>') end
---   return f('<S-Tab>')
--- end, { silent = true }}
---
--- inoremap{'<C-Space>', require"compe"._complete, { silent = true }}

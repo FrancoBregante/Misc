@@ -74,6 +74,7 @@ require("formatter").setup({
     json       = { prettier },
     html       = { prettier },
     rust       = { rustfmt },
+    ruby       = { rubocop },
     go         = { gofmt },
     lua        = { stylua },
   },

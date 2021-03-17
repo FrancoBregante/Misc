@@ -80,16 +80,25 @@ telescope.setup({
       show_unindexed  = true,
       ignore_patterns = { "*.git/*", "*/tmp/*" },
       workspaces = {
-        ["nvim"]      = "/home/francisl/.config/nvim",
-        ["alacritty"] = "/home/francisl/.config/alacritty",
+        ["nvim"]      = "/home/elianiva/.config/nvim",
+        ["awesome"]   = "/home/elianiva/.config/awesome",
+        ["alacritty"] = "/home/elianiva/.config/alacritty",
+        ["scratch"]   = "/home/elianiva/codes/scratch",
       },
-    }
+    },
+    arecibo = {
+      ["selected_engine"]   = "duckduckgo",
+      ["url_open_command"]  = "xdg-open",
+      ["show_http_headers"] = false,
+      ["show_domain_icons"] = false,
+    },
   },
 })
 
 pcall(require("telescope").load_extension, "fzy_native") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
+pcall(require("telescope").load_extension, "arecibo") -- websearch
 
 M.grep_prompt = function()
   require("telescope.builtin").grep_string({
@@ -173,4 +182,3 @@ return setmetatable({}, {
     end
   end
 })
-
