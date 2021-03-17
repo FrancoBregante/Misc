@@ -1,34 +1,52 @@
-vim.cmd[[packadd nvim-treesitter]]
-vim.cmd[[packadd playground]]
+vim.cmd [[packadd nvim-treesitter]]
+vim.cmd [[packadd nvim-treesitter-textobjects]]
+vim.cmd [[packadd playground]]
+vim.cmd [[packadd nvim-ts-autotag]]
 
 local ts_config = require("nvim-treesitter.configs")
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 
 ts_config.setup {
   ensure_installed = {
-    "typescript",
-    "javascript",
-    "jsdoc",
-    "html",
-    "css",
-    "php",
-    "rust",
-    "tsx",
-    "cpp",
-    "python",
-    "lua",
-    "yaml",
-    "toml",
-    "go",
+    "javascript", "typescript", "tsx", "jsdoc", "cpp", "jsonc",
+    "html", "css", "lua", "c", "rust", "go", "java", "query",
+    "python", "rst", "svelte", "ruby"
   },
 
   highlight = {
     enable = true,
-    -- disable = { 'svelte' },
-    use_languagetree = true,
   },
 
   indent = {
-    enable = true
+    enable = true,
+  },
+
+  -- autotag = {
+  --   enable = true,
+  -- },
+
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@block.inner",
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<Leader>a"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<Leader>A"] = "@parameter.inner",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+    },
   },
 }
