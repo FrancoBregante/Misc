@@ -194,14 +194,3 @@ for name, opts in pairs(servers) do
     settings = opts.settings or {},
   })
 end
-
--- -- jdtls stuff
--- vim.api.nvim_exec(
---   [[
---   augroup jdtls
---   au!
---   au FileType java lua require'jdtls'.start_or_attach({cmd = {'/home/elianiva/.scripts/run_jdtls'}, on_attach = require'modules.lsp._mappings'.lsp_mappings("jdtls")})
---   augroup END
--- ]],
---   false
--- )

@@ -91,22 +91,17 @@ if ok then
     use { "phaazon/hop.nvim", opt = false } -- easymotion but better
 
 
+    use {'TimUntersberger/neogit', opt = false}
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
     use { 'dense-analysis/ale', opt = false }
-    use { 'blackcauldron7/surround.nvim', opt = true }
     use { 'ngmy/vim-rubocop', opt = false }
     use { 'tpope/vim-rails', opt = false }
     use { 'thoughtbot/vim-rspec', opt = false }
     use { 'Shougo/deoplete.nvim', opt = false }
     use { 'Shougo/deoplete-lsp', opt = false }
     vim.cmd('let g:deoplete#enable_at_startup = 1')
-    use {'phaazon/hop.nvim', opt = false} -- easymotion but better
-    use {'tami5/sql.nvim', opt = false}
-    use {'AndrewRadev/splitjoin.vim', opt = false}
-    use {'TimUntersberger/neogit', opt = false}
   end
 
 
   packer.startup(plugins)
 end
-

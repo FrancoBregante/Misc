@@ -80,10 +80,8 @@ telescope.setup({
       show_unindexed  = true,
       ignore_patterns = { "*.git/*", "*/tmp/*" },
       workspaces = {
-        ["nvim"]      = "/home/elianiva/.config/nvim",
-        ["awesome"]   = "/home/elianiva/.config/awesome",
-        ["alacritty"] = "/home/elianiva/.config/alacritty",
-        ["scratch"]   = "/home/elianiva/codes/scratch",
+        ["nvim"]      = "/home/francisl/.config/nvim",
+        ["alacritty"] = "/home/francisl/.config/alacritty",
       },
     },
     arecibo = {

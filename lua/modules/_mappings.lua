@@ -20,9 +20,6 @@ nnoremap { "<C-n>", "<CMD>NvimTreeToggle<CR>" }
 -- hippity hoppity your word is not my property
 nnoremap { "<Leader>w", require("hop").hint_words }
 
--- hippity hoppity your word is not my property
-remap('n', "<Leader>w", "<CMD>HopWord<CR>", { noremap = true })
-
 -- toggle telescope.nvim
 nnoremap {
   "<C-p>",
