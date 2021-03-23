@@ -26,11 +26,11 @@ nnoremap {
   require("plugins._telescope").files,
   { silent = true },
 }
--- nnoremap {
---   "<C-f>",
---   require("plugins._telescope").grep_prompt,
---   { silent = true },
--- }
+nnoremap {
+  "<C-f>",
+  require("plugins._telescope").grep_prompt,
+  { silent = true },
+}
 nnoremap{
   "<Leader>fb",
   require("plugins._telescope").buffer_fuzzy,

@@ -18,7 +18,7 @@ if ok then
     use {'wbthomason/packer.nvim', opt = true}
 
     use {'gruvbox-community/gruvbox', opt = false}
-    use { "windwp/nvim-autopairs", opt = true } -- autopairs brackets, braces etc
+    use { "windwp/nvim-autopairs", opt = false } -- autopairs brackets, braces etc
     use { "b3nj5m1n/kommentary", opt = true } -- comment stuff easier
     use { 'brooth/far.vim', opt = false } -- project wide search and replace
     use { 'tpope/vim-fugitive', opt = false } -- git helpers inside neovim
@@ -55,7 +55,7 @@ if ok then
     use {
       'dhruvasagar/vim-table-mode',
       ft = {'text', 'markdown'},
-      opt = true,
+      opt = false,
     } -- table alignment
     use { "kyazdani42/nvim-web-devicons", opt = true } -- fancy icons
     use { "kyazdani42/nvim-tree.lua", opt = true } -- super fast file tree viewer
@@ -84,22 +84,17 @@ if ok then
     use {
       "mhinz/vim-sayonara",
       cmd = 'Sayonara',
-      opt = true
+      opt = false
     } -- better window and buffer management
     use { "AndrewRadev/splitjoin.vim", opt = false }
     use { "tjdevries/astronauta.nvim", opt = false } -- temporary stuff before it got merged upstream
     use { "phaazon/hop.nvim", opt = false } -- easymotion but better
 
-
     use {'TimUntersberger/neogit', opt = false}
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
-    use { 'dense-analysis/ale', opt = false }
     use { 'ngmy/vim-rubocop', opt = false }
     use { 'tpope/vim-rails', opt = false }
     use { 'thoughtbot/vim-rspec', opt = false }
-    use { 'Shougo/deoplete.nvim', opt = false }
-    use { 'Shougo/deoplete-lsp', opt = false }
-    vim.cmd('let g:deoplete#enable_at_startup = 1')
   end
 
 
