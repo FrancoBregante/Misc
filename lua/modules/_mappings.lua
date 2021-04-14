@@ -126,6 +126,20 @@ nmap { "ga", "<Plug>(EasyAlign)", { silent = true }}
 
 nmap {"<Leader>t", "<Plug>PlenaryTestFile", { silent = true }}
 
+local curstr = require("curstr").execute
+
+nnoremap {
+  "gf",
+  function()
+    if vim.bo.filetype == "lua" then
+      return curstr("vim/lua")
+    end
+
+    return curstr("file/path")
+  end,
+  { silent = true }
+}
+
 nmap {"<Leader>rra", "<CMD>call RunAllSpecs()<CR>", { silent = true }}
 nmap {"<Leader>rrn", "<CMD>call RunNearestSpec()<CR>", { silent = true }}
 nmap {"<Leader>rrc", "<CMD>call RunCurrentSpecFile()<CR>", { silent = true }}

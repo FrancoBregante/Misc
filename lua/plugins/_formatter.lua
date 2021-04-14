@@ -1,4 +1,4 @@
-vim.cmd [[packadd formatter.nvim]]
+vim.cmd([[packadd formatter.nvim]])
 
 local is_cfg_present = require("modules._util").is_cfg_present
 local k = require("astronauta.keymap")
@@ -32,13 +32,13 @@ local prettier = function()
   }
 end
 
--- local denofmt = function()
---   return {
---     exe   = "deno",
---     args  = "fmt",
---     stdin = true,
---   }
--- end
+local denofmt = function()
+  return {
+    exe   = "deno",
+    args  = { "fmt", "-" },
+    stdin = true,
+  }
+end
 
 local rustfmt = function()
   return {
@@ -80,4 +80,4 @@ require("formatter").setup({
   },
 })
 
-nnoremap {"gf", "<CMD>Format<CR>", { silent = true }}
+nnoremap {"<Leader>gf", "<CMD>Format<CR>", { silent = true }}

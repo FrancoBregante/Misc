@@ -13,30 +13,30 @@ vim.cmd[[
 vim.cmd("cd %:p:h")
 
 -- load plugin manager first
-require("plugins._packer")
+pcall(require, "plugins._packer")
 
 -- load modules
-require("modules._settings")
-require("modules._appearances")
-require("modules._util")
-require("modules._mappings")
-require("modules._statusline")
-require("modules._others")
+pcall(require, "modules._settings")
+pcall(require, "modules._appearances")
+pcall(require, "modules._util")
+pcall(require, "modules._mappings")
+pcall(require, "modules._statusline")
+pcall(require, "modules._others")
 
 -- plugins config
-require("plugins._bufferline")
-require("plugins._compe")
-require("plugins._emmet")
-require("plugins._formatter")
-require("plugins._gitsigns")
-require("plugins._nvimtree")
-require("plugins._snippets")
-require("plugins._telescope")
-require("plugins._treesitter")
-require("plugins._kommentary")
+pcall(require, "plugins._bufferline")
+pcall(require, "plugins._compe")
+-- pcall(require, "plugins._emmet")
+pcall(require, "plugins._formatter")
+pcall(require, "plugins._gitsigns")
+pcall(require, "plugins._nvimtree")
+-- pcall(require, "plugins._snippets")
+pcall(require, "plugins._telescope")
+pcall(require, "plugins._treesitter")
+pcall(require, "plugins._kommentary")
 
 -- highlight bg according to hex/rgb/rgba text
 require"colorizer".setup{}
 
 -- lsp stuff
-require("modules.lsp")
+pcall(require, "modules.lsp")

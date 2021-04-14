@@ -9,7 +9,6 @@ ColorUtil.override_gruvbox = function()
     { "Comment",     { gui = "italic"  }},
     { "SignColumn",  { bg  = "NONE"    }},
     { "ColorColumn", { bg  = "#3C3836" }},
-    { "IncSearch",   { bg  = "#928374" }},
     { "String",      { gui = "NONE"    }},
     { "Special",     { gui = "NONE"    }},
     { "Folded",      { gui = "NONE"    }},
@@ -33,7 +32,6 @@ ColorUtil.override_gruvbox = function()
 
     -- lsp saga stuff
     { "TargetWord",             { fg = "#d79921", bg  = "NONE",    gui = "bold" }},
-    { "LspSagaFinderSelection", { fg = "#d79921", bg  = "#3C3836", gui = "bold" }},
     { "LspDiagErrorBorder",     { fg = "#fb4934", gui = "bold" }},
     { "LspDiagWarnBorder",      { fg = "#d79921", gui = "bold" }},
     { "LspDiagInfoBorder",      { fg = "#458588", gui = "bold" }},
@@ -55,11 +53,11 @@ ColorUtil.override_gruvbox = function()
     { "IncSearch",             { bg  = "#282828", fg  = "#928374"   }},
     { "mkdLink",               { fg  = "#458588", gui = "underline" }},
     { "markdownCode",          { bg  = "NONE",    fg  = "#fe8019"   }},
-    { "StrikeThrough",         { gui = "strikethrough" }},
+    -- { "StrikeThrough",         { gui = "strikethrough" }},
 
     -- statusline colours
-    { "StatusLine",   { bg = "#EBDBB2", fg = "#3C3836" }},
-    { "StatusLineNC", { bg = "#928374", fg = "#3C3836" }},
+    { "StatusLine",   { bg = "#3C3836", fg = "#EBDBB2", gui = "NONE" }},
+    { "StatusLineNC", { bg = "#3C3836", fg = "#928374", gui = "NONE" }},
     { "Mode",         { bg = "#928374", fg = "#1D2021", gui = "bold" }},
     { "LineCol",      { bg = "#504945", fg = "#ebdbb2", gui = "bold" }},
     { "LineColAlt",   { bg = "#3C3836", fg = "#ebdbb2" }},
@@ -79,7 +77,7 @@ ColorUtil.override_gruvbox = function()
     { "TelescopeMatching",  { bg = "NONE", fg = "#fb4934", gui = "bold" }},
     { "TelescopeBorder",    { bg = "NONE", fg = "#928374", gui = "bold" }},
 
-    -- diagnostic nvim
+    -- diagnostic stuff
     { "LspDiagnosticsDefaultError",         { bg  = "NONE", fg = "#fb4934" }},
     { "LspDiagnosticsDefaultWarning",       { bg  = "NONE", fg = "#d79921" }},
     { "LspDiagnosticsDefaultInformation",   { bg  = "NONE", fg = "#458588" }},

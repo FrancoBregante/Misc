@@ -1,27 +1,17 @@
 vim.cmd [[packadd nvim-lspconfig]]
-vim.cmd [[packadd lspsaga.nvim]]
 
 local nvim_lsp = require("lspconfig")
 local mappings = require("modules.lsp._mappings")
 local is_cfg_present = require("modules._util").is_cfg_present
 
-require("modules.lsp._diagnostic")
-require("lspsaga").init_lsp_saga({
-  border_style = 1,
-  code_action_prompt = {
-     enable = false,
-     sign = true,
-     sign_priority = 20,
-     virtual_text = false,
-   },
-})
-
 local custom_on_attach = function()
   mappings.lsp_mappings()
 end
 
+pcall(require, "modules.lsp._handlers")
+
 local custom_on_init = function(client)
-  print("Language Server Protocol started!")
+  print("LSP on!")
 
   if client.config.flags then
     client.config.flags.allow_incremental_sync = true
@@ -56,7 +46,7 @@ local denofmt = {
   formatStdin = true,
 }
 
-local sumneko_root = os.getenv("HOME") .. "/repo/lua-language-server"
+local sumneko_root = os.getenv("HOME") .. "/Repos/lua-language-server"
 local servers = {
   tsserver = {
     filetypes = { "javascript", "typescript", "typescriptreact" },
@@ -71,6 +61,9 @@ local servers = {
     },
     on_init = custom_on_init,
     root_dir = vim.loop.cwd,
+    extra_setup = function ()
+      require("nvim-lsp-ts-utils").setup {}
+    end
   },
   -- denols = {
   --   filetypes = { "javascript", "typescript", "typescriptreact" },
@@ -81,80 +74,97 @@ local servers = {
   -- },
   html = {},
   cssls = {},
-  rust_analyzer = {},
+  rust_analyzer = {
+    capabilities = (function()
+      -- for autoimports
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+          'documentation',
+          'detail',
+          'additionalTextEdits',
+        }
+      }
+      return capabilities
+    end)()
+  },
   clangd = {},
   solargraph = {
+    cmd = {"solargraph", "stdio"},
+    filetypes = { "ruby" },
+    root_dir = vim.loop.cwd,
     settings = {
       solargraph = {
-        autoformat = true,
-        completion = true,
-        commandPath = '/home/francisl/.rbenv/versions/3.0.0/bin/solargraph',
-        diagnostics = true
+        -- commandPath = "/home/francisl/.local/share/gem/ruby/3.0.0/bin/solargraph",
+        diagnostics = true,
+        logLevel = "debug",
+        transport = "stdio",
       },
     },
   },
   gopls = {
     root_dir = vim.loop.cwd,
   },
-  efm = {
-    cmd = { "efm-langserver" },
-    on_attach = function(client)
-      client.resolved_capabilities.rename = false
-      client.resolved_capabilities.hover = false
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.completion = false
-    end,
-    on_init = custom_on_init,
-    filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
-    settings = {
-      rootMarkers = { ".git", "package.json" },
-      languages = {
-        javascript = { eslint, denofmt },
-        typescript = { eslint, denofmt },
-        typescriptreact = { eslint },
-        svelte = { eslint },
-      },
-    },
-  },
-  svelte = {
-    on_attach = function(client)
-      mappings.lsp_mappings()
+  -- efm = {
+  --   cmd = { "efm-langserver" },
+  --   on_attach = function(client)
+  --     client.resolved_capabilities.rename = false
+  --     client.resolved_capabilities.hover = false
+  --     client.resolved_capabilities.document_formatting = true
+  --     client.resolved_capabilities.completion = false
+  --   end,
+  --   on_init = custom_on_init,
+  --   filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
+  --   settings = {
+  --     rootMarkers = { ".git", "package.json" },
+  --     languages = {
+  --       javascript = { eslint, denofmt },
+  --       typescript = { eslint, denofmt },
+  --       typescriptreact = { eslint },
+  --       svelte = { eslint },
+  --     },
+  --   },
+  -- },
+  -- svelte = {
+  --   on_attach = function(client)
+  --     mappings.lsp_mappings()
 
-      client.server_capabilities.completionProvider.triggerCharacters = {
-        ".", '"', "'", "`", "/", "@", "*",
-        "#", "$", "+", "^", "(", "[", "-", ":"
-      }
-    end,
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
-    on_init = custom_on_init,
-    filetypes = { "svelte" },
-    settings = {
-      svelte = {
-        plugin = {
-          html = {
-            completions = {
-              enable = true,
-              emmet = false,
-            },
-          },
-          svelte = {
-            completions = {
-              enable = true,
-              emmet = false,
-            },
-          },
-          css = {
-            completions = {
-              enable = true,
-              emmet = false,
-            },
-          },
-        },
-      },
-    },
-  },
+  --     client.server_capabilities.completionProvider.triggerCharacters = {
+  --       ".", '"', "'", "`", "/", "@", "*",
+  --       "#", "$", "+", "^", "(", "[", "-", ":"
+  --     }
+  --   end,
+  --   handlers = {
+  --     ["textDocument/publishDiagnostics"] = is_using_eslint,
+  --   },
+  --   on_init = custom_on_init,
+  --   filetypes = { "svelte" },
+  --   settings = {
+  --     svelte = {
+  --       plugin = {
+  --         html = {
+  --           completions = {
+  --             enable = true,
+  --             emmet = false,
+  --           },
+  --         },
+  --         svelte = {
+  --           completions = {
+  --             enable = true,
+  --             emmet = false,
+  --           },
+  --         },
+  --         css = {
+  --           completions = {
+  --             enable = true,
+  --             emmet = false,
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   sumneko_lua = {
     cmd = {
       sumneko_root .. "/bin/Linux/lua-language-server",
@@ -179,10 +189,23 @@ local servers = {
       },
     },
   },
+  -- jdtls = {
+  --   extra_setup = function()
+  --     vim.api.nvim_exec([[
+  --       augroup jdtls
+  --       au!
+  --       au FileType java lua require('jdtls').start_or_attach({ cmd = { "run_jdtls" }, on_attach = require'modules.lsp._mappings'.lsp_mappings("jdtls") })
+  --       augroup END
+  --     ]], false)
+  --   end
+  -- },
 }
 
 for name, opts in pairs(servers) do
   local client = nvim_lsp[name]
+  if opts.extra_setup then
+    opts.extra_setup()
+  end
   client.setup({
     cmd = opts.cmd or client.cmd,
     filetypes = opts.filetypes or client.filetypes,

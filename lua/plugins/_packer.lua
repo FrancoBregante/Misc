@@ -15,16 +15,14 @@ if ok then
 
   local plugins = function()
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim', opt = false}
 
     use {'gruvbox-community/gruvbox', opt = false}
     use { "windwp/nvim-autopairs", opt = false } -- autopairs brackets, braces etc
-    use { "b3nj5m1n/kommentary", opt = true } -- comment stuff easier
-    use { 'brooth/far.vim', opt = false } -- project wide search and replace
-    use { 'tpope/vim-fugitive', opt = false } -- git helpers inside neovim
+    use { "b3nj5m1n/kommentary", opt = false } -- comment stuff easier
     use {
       "mhartington/formatter.nvim",
-      opt = true,
+      opt = false,
       cmd = "Format",
     } -- helper for fast formatting
     use {'norcalli/nvim-colorizer.lua', opt = false} -- colorize hex/rgb/hsl value
@@ -33,20 +31,23 @@ if ok then
       requires = {
         { "nvim-treesitter/playground" }, -- playground for treesitter
         { "nvim-treesitter/nvim-treesitter-textobjects" }, -- "smart" textobjects
+        { "windwp/nvim-ts-autotag" },
+        { "JoosepAlviste/nvim-ts-context-commentstring" },
+        { "theHamsta/nvim-treesitter-pairs" },
       },
-      opt = true,
+      opt = false,
     } -- mostly for better syntax highlighting, but it has more stuff
     use {
       'hrsh7th/nvim-compe',
-      opt = true,
+      opt = false,
       requires = {
-        {'hrsh7th/vim-vsnip'}, -- integration with vim-vsnip
+        {'L3MON4D3/LuaSnip'},
       },
     } -- completion framework
     use {
       "junegunn/goyo.vim",
       ft = { "text", "markdown" },
-      opt = true,
+      opt = false,
     } -- no distraction mode a.k.a zen mode
     use {
       "junegunn/vim-easy-align",
@@ -57,13 +58,12 @@ if ok then
       ft = {'text', 'markdown'},
       opt = false,
     } -- table alignment
-    use { "kyazdani42/nvim-web-devicons", opt = true } -- fancy icons
-    use { "kyazdani42/nvim-tree.lua", opt = true } -- super fast file tree viewer
-    use { "akinsho/nvim-bufferline.lua", opt = true } -- snazzy bufferline
-    use { "neovim/nvim-lspconfig", opt = true } -- builtin lsp config
+    use { "kyazdani42/nvim-web-devicons", opt = false } -- fancy icons
+    use { "kyazdani42/nvim-tree.lua", opt = false } -- super fast file tree viewer
+    use { "akinsho/nvim-bufferline.lua", opt = false } -- snazzy bufferline
+    use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
+    use { "neovim/nvim-lspconfig", opt = false } -- builtin lsp config
     use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
-    use { "glepnir/lspsaga.nvim", opt = true } -- builtin lsp config
-    use { "windwp/nvim-ts-autotag", opt = true } -- auto-close html tag
     use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
     use {
       "nvim-telescope/telescope.nvim",
@@ -75,11 +75,11 @@ if ok then
         { "nvim-telescope/telescope-frecency.nvim" }, -- media preview
       },
     } -- extensible fuzzy finder
-    use { "lewis6991/gitsigns.nvim", opt = true } -- show git stuff in signcolumn
+    use { "lewis6991/gitsigns.nvim", opt = false } -- show git stuff in signcolumn
     use {
       "rhysd/git-messenger.vim",
       cmd = "GitMessenger",
-      opt = true
+      opt = false
     } -- sort of like git blame but in floating window
     use {
       "mhinz/vim-sayonara",
@@ -89,6 +89,7 @@ if ok then
     use { "AndrewRadev/splitjoin.vim", opt = false }
     use { "tjdevries/astronauta.nvim", opt = false } -- temporary stuff before it got merged upstream
     use { "phaazon/hop.nvim", opt = false } -- easymotion but better
+    use { "notomo/curstr.nvim", opt = false }
 
     use {'TimUntersberger/neogit', opt = false}
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
@@ -96,7 +97,6 @@ if ok then
     use { 'tpope/vim-rails', opt = false }
     use { 'thoughtbot/vim-rspec', opt = false }
   end
-
 
   packer.startup(plugins)
 end
