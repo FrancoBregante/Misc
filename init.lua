@@ -12,31 +12,49 @@ vim.cmd[[
 -- change cwd to current directory
 vim.cmd("cd %:p:h")
 
--- load plugin manager first
-pcall(require, "plugins._packer")
+local modules = {
+  -- load plugin manager first
+  "plugins._packer",
 
--- load modules
-pcall(require, "modules._settings")
-pcall(require, "modules._appearances")
-pcall(require, "modules._util")
-pcall(require, "modules._mappings")
-pcall(require, "modules._statusline")
-pcall(require, "modules._others")
+  -- load modules
+  "modules._settings",
+  "modules._appearances",
+  "modules._util",
+  "modules._mappings",
+  "modules._statusline",
 
--- plugins config
-pcall(require, "plugins._bufferline")
-pcall(require, "plugins._compe")
--- pcall(require, "plugins._emmet")
-pcall(require, "plugins._formatter")
-pcall(require, "plugins._gitsigns")
-pcall(require, "plugins._nvimtree")
--- pcall(require, "plugins._snippets")
-pcall(require, "plugins._telescope")
-pcall(require, "plugins._treesitter")
-pcall(require, "plugins._kommentary")
+  -- plugins config
+  "plugins._bufferline",
+  "plugins._compe",
+  "plugins._formatter",
+  "plugins._gitsigns",
+  "plugins._nvimtree",
+  "plugins._snippets",
+  "plugins._telescope",
+  "plugins._treesitter",
+  "plugins._kommentary",
+
+
+  "modules._others",
+
+   -- lsp stuff
+  "modules.lsp"
+}
 
 -- highlight bg according to hex/rgb/rgba text
 require"colorizer".setup{}
 
--- lsp stuff
-pcall(require, "modules.lsp")
+local errors = {}
+for _, v in pairs(modules) do
+  local ok, err = pcall(require, v)
+  if not ok then
+    table.insert(errors, err)
+  end
+end
+
+if not vim.tbl_isempty(errors) then
+  for _, v in pairs(errors) do
+    print(v)
+  end
+end
+

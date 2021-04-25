@@ -17,7 +17,12 @@ if ok then
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = false}
 
+    use { "joshdick/onedark.vim", opt = false }
     use {'gruvbox-community/gruvbox', opt = false}
+    -- use {'folke/tokyonight.nvim', opt = false}
+
+    use { "sunjon/Shade.nvim", opt = false}
+
     use { "windwp/nvim-autopairs", opt = false } -- autopairs brackets, braces etc
     use { "b3nj5m1n/kommentary", opt = false } -- comment stuff easier
     use {
@@ -58,7 +63,6 @@ if ok then
       ft = {'text', 'markdown'},
       opt = false,
     } -- table alignment
-    use { "kyazdani42/nvim-web-devicons", opt = false } -- fancy icons
     use { "kyazdani42/nvim-tree.lua", opt = false } -- super fast file tree viewer
     use { "akinsho/nvim-bufferline.lua", opt = false } -- snazzy bufferline
     use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
@@ -70,9 +74,9 @@ if ok then
       requires = {
         { "nvim-lua/popup.nvim" },
         { "nvim-lua/plenary.nvim" },
-        { "nvim-telescope/telescope-fzy-native.nvim" }, -- fast search algo
         { "nvim-telescope/telescope-media-files.nvim" }, -- media preview
         { "nvim-telescope/telescope-frecency.nvim" }, -- media preview
+        { "nvim-telescope/telescope-fzf-native.nvim" },
       },
     } -- extensible fuzzy finder
     use { "lewis6991/gitsigns.nvim", opt = false } -- show git stuff in signcolumn
@@ -91,7 +95,12 @@ if ok then
     use { "phaazon/hop.nvim", opt = false } -- easymotion but better
     use { "notomo/curstr.nvim", opt = false }
 
-    use {'TimUntersberger/neogit', opt = false}
+    -- use {
+    --   'hoob3rt/lualine.nvim',
+    --   requires = {
+        use { "kyazdani42/nvim-web-devicons", opt = false } -- fancy icons
+    --   }
+    -- }
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
     use { 'ngmy/vim-rubocop', opt = false }
     use { 'tpope/vim-rails', opt = false }

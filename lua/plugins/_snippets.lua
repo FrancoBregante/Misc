@@ -6,8 +6,8 @@ local snoremap = k.snoremap
 
 ls.snippets = {
   all = {
-    ls.parser.parse_snippet({ trig = "todo" }, "TODO(elianiva): ${1:todo}"),
-    ls.parser.parse_snippet({ trig = "fixme" }, "FIXME(elianiva): ${1:fixme}"),
+    ls.parser.parse_snippet({ trig = "todo" }, "TODO(franco.bregante): ${1:todo}"),
+    ls.parser.parse_snippet({ trig = "fixme" }, "FIXME(franco.bregante): ${1:fixme}"),
   },
 }
 

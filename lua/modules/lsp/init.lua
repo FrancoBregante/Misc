@@ -106,65 +106,65 @@ local servers = {
   gopls = {
     root_dir = vim.loop.cwd,
   },
-  -- efm = {
-  --   cmd = { "efm-langserver" },
-  --   on_attach = function(client)
-  --     client.resolved_capabilities.rename = false
-  --     client.resolved_capabilities.hover = false
-  --     client.resolved_capabilities.document_formatting = true
-  --     client.resolved_capabilities.completion = false
-  --   end,
-  --   on_init = custom_on_init,
-  --   filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
-  --   settings = {
-  --     rootMarkers = { ".git", "package.json" },
-  --     languages = {
-  --       javascript = { eslint, denofmt },
-  --       typescript = { eslint, denofmt },
-  --       typescriptreact = { eslint },
-  --       svelte = { eslint },
-  --     },
-  --   },
-  -- },
-  -- svelte = {
-  --   on_attach = function(client)
-  --     mappings.lsp_mappings()
+  efm = {
+    cmd = { "efm-langserver" },
+    on_attach = function(client)
+      client.resolved_capabilities.rename = false
+      client.resolved_capabilities.hover = false
+      client.resolved_capabilities.document_formatting = true
+      client.resolved_capabilities.completion = false
+    end,
+    on_init = custom_on_init,
+    filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
+    settings = {
+      rootMarkers = { ".git", "package.json" },
+      languages = {
+        javascript = { eslint, denofmt },
+        typescript = { eslint, denofmt },
+        typescriptreact = { eslint },
+        svelte = { eslint },
+      },
+    },
+  },
+  svelte = {
+    on_attach = function(client)
+      mappings.lsp_mappings()
 
-  --     client.server_capabilities.completionProvider.triggerCharacters = {
-  --       ".", '"', "'", "`", "/", "@", "*",
-  --       "#", "$", "+", "^", "(", "[", "-", ":"
-  --     }
-  --   end,
-  --   handlers = {
-  --     ["textDocument/publishDiagnostics"] = is_using_eslint,
-  --   },
-  --   on_init = custom_on_init,
-  --   filetypes = { "svelte" },
-  --   settings = {
-  --     svelte = {
-  --       plugin = {
-  --         html = {
-  --           completions = {
-  --             enable = true,
-  --             emmet = false,
-  --           },
-  --         },
-  --         svelte = {
-  --           completions = {
-  --             enable = true,
-  --             emmet = false,
-  --           },
-  --         },
-  --         css = {
-  --           completions = {
-  --             enable = true,
-  --             emmet = false,
-  --           },
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+      client.server_capabilities.completionProvider.triggerCharacters = {
+        ".", '"', "'", "`", "/", "@", "*",
+        "#", "$", "+", "^", "(", "[", "-", ":"
+      }
+    end,
+    handlers = {
+      ["textDocument/publishDiagnostics"] = is_using_eslint,
+    },
+    on_init = custom_on_init,
+    filetypes = { "svelte" },
+    settings = {
+      svelte = {
+        plugin = {
+          html = {
+            completions = {
+              enable = true,
+              emmet = false,
+            },
+          },
+          svelte = {
+            completions = {
+              enable = true,
+              emmet = false,
+            },
+          },
+          css = {
+            completions = {
+              enable = true,
+              emmet = false,
+            },
+          },
+        },
+      },
+    },
+  },
   sumneko_lua = {
     cmd = {
       sumneko_root .. "/bin/Linux/lua-language-server",
@@ -189,16 +189,16 @@ local servers = {
       },
     },
   },
-  -- jdtls = {
-  --   extra_setup = function()
-  --     vim.api.nvim_exec([[
-  --       augroup jdtls
-  --       au!
-  --       au FileType java lua require('jdtls').start_or_attach({ cmd = { "run_jdtls" }, on_attach = require'modules.lsp._mappings'.lsp_mappings("jdtls") })
-  --       augroup END
-  --     ]], false)
-  --   end
-  -- },
+  jdtls = {
+    extra_setup = function()
+      vim.api.nvim_exec([[
+        augroup jdtls
+        au!
+        au FileType java lua require('jdtls').start_or_attach({ cmd = { "run_jdtls" }, on_attach = require'modules.lsp._mappings'.lsp_mappings("jdtls") })
+        augroup END
+      ]], false)
+    end
+  },
 }
 
 for name, opts in pairs(servers) do

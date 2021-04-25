@@ -23,7 +23,26 @@ require("colorizer").setup {
 
 require("hop").setup{}
 
--- indentline
+-- require'shade'.setup({
+--   overlay_opacity = 60,
+--   opacity_step = 1,
+--   keys = {
+--     brightness_up    = '<C-Up>',
+--     brightness_down  = '<C-Down>',
+--     toggle           = '<Leader>s',
+--   }
+-- })
+
+-- require('nvim-biscuits').setup {
+--   default_config = {
+--     max_length = 40,
+--     min_distance = 6,
+--     prefix_string = " // ",
+--     on_events = { "BufWritePost" }
+--   }
+-- }
+
+-- -- indentline
 -- vim.g.indent_char = "▏"
 -- vim.g.indent_blankline_char = "▏"
 -- vim.g.indent_blankline_show_end_of_line = false
@@ -33,5 +52,3 @@ require("hop").setup{}
 -- vim.g.indent_blankline_context_highlight = "Label"
 -- vim.g.indent_blankline_context_patterns = {"class", "function", "method", "^if", "^while", "^for", "^object", "^table", "block"}
 -- vim.g.indent_blankline_show_trailing_blankline_indent = false
-
-require("neogit").setup{}
