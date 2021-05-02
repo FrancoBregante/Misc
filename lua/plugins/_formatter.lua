@@ -38,6 +38,13 @@ end
 --   }
 -- end
 
+local rubocop = function()
+  return {
+    exe   = "rubocop",
+    stdin = true,
+  }
+end
+
 local rustfmt = function()
   return {
     exe   = "rustfmt",
@@ -55,7 +62,7 @@ end
 
 local stylua = function()
   return {
-    xe = "stylua",
+    exe = "stylua",
     args = {
       "--config-path",
       "~/.config/nvim/.stylua",
@@ -83,4 +90,4 @@ require("formatter").setup({
   },
 })
 
-nnoremap {"<Leader>gf", "<CMD>Format<CR>", { silent = true }}
+nnoremap { "<Leader>gf", "<CMD>Format<CR>", { silent = true } }

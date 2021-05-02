@@ -1,4 +1,3 @@
-vim.cmd([[packadd LuaSnip]])
 local ls = require("luasnip")
 local k = require("astronauta.keymap")
 local inoremap = k.inoremap

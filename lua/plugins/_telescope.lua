@@ -40,12 +40,8 @@ telescope.setup({
 
         ["<C-u>"] = actions.preview_scrolling_up,
         ["<C-d>"] = actions.preview_scrolling_down,
-        -- ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        -- ["<A-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
         ["<Tab>"] = actions.toggle_selection,
-        -- ['<C-s>'] = actions.open_selected_files,
-        -- ['<C-a>'] = actions.cycle_previewers_prev,
-        -- ['<C-w>l'] = actions.preview_switch_window_right,
+        -- ["<C-r>"] = actions.refine_result,
       },
       n = {
         ["<CR>"]  = actions.select_default + actions.center,
@@ -67,7 +63,7 @@ telescope.setup({
   },
   extensions = {
     fzf = {
-      override_generic_sorter = false,
+      override_generic_sorter = true,
       override_file_sorter = true,
     },
     media_files = {
@@ -97,6 +93,22 @@ pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
 pcall(require("telescope").load_extension, "arecibo") -- websearch
 
+local no_preview = function(opts)
+  opts = opts or {}
+  return require("telescope.themes").get_dropdown(
+    vim.tbl_extend("force", {
+      borderchars = {
+        { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        prompt  = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+        results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+        preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      },
+      width = 0.8,
+      previewer = false,
+    }, opts)
+  )
+end
+
 M.grep_prompt = function()
   require("telescope.builtin").grep_string({
     shorten_path = true,
@@ -107,19 +119,6 @@ end
 M.files = function()
   require("telescope.builtin").find_files({
     file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
-  })
-end
-
-local no_preview = function()
-  return require("telescope.themes").get_dropdown({
-    borderchars = {
-      { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-      prompt  = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
-      results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
-      preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-    },
-    width = 0.8,
-    previewer = false,
   })
 end
 

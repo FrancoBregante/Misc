@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.g.python3_host_prog = "/usr/bin/python"
+
 -- prevent typo when pressing `wq` or `q`
 vim.cmd[[
   cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
@@ -8,6 +10,9 @@ vim.cmd[[
   cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
   cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
 ]]
+
+-- highlight yanked text for 250ms
+vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "OnYank" }]]
 
 -- change cwd to current directory
 vim.cmd("cd %:p:h")
@@ -23,26 +28,9 @@ local modules = {
   "modules._mappings",
   "modules._statusline",
 
-  -- plugins config
-  "plugins._bufferline",
-  "plugins._compe",
-  "plugins._formatter",
-  "plugins._gitsigns",
-  "plugins._nvimtree",
-  "plugins._snippets",
-  "plugins._telescope",
-  "plugins._treesitter",
-  "plugins._kommentary",
-
-
-  "modules._others",
-
    -- lsp stuff
   "modules.lsp"
 }
-
--- highlight bg according to hex/rgb/rgba text
-require"colorizer".setup{}
 
 local errors = {}
 for _, v in pairs(modules) do

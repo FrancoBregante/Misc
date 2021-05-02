@@ -1,11 +1,3 @@
-vim.api.nvim_exec([[
-  packadd nvim-treesitter
-  packadd nvim-treesitter-textobjects
-  packadd nvim-treesitter-pairs
-  packadd playground
-  packadd nvim-ts-context-commentstring
-]], false)
-
 local ts_config = require("nvim-treesitter.configs")
 
 ts_config.setup {
@@ -49,6 +41,15 @@ ts_config.setup {
     }
   },
 
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<Leader>i",
+      node_incremental = "<C-i>",
+      node_decremental = "<A-i>",
+    },
+  },
+
   textobjects = {
     select = {
       enable = true,
@@ -73,5 +74,10 @@ ts_config.setup {
     lsp_interop = {
       enable = true,
     },
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
   },
 }

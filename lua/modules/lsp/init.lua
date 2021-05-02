@@ -48,30 +48,42 @@ local denofmt = {
 
 local sumneko_root = os.getenv("HOME") .. "/Repos/lua-language-server"
 local servers = {
-  tsserver = {
-    filetypes = { "javascript", "typescript", "typescriptreact" },
-    on_attach = function()
-      mappings.lsp_mappings()
-    end,
-    init_options = {
-      documentFormatting = false,
-    },
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
-    on_init = custom_on_init,
-    root_dir = vim.loop.cwd,
-    extra_setup = function ()
-      require("nvim-lsp-ts-utils").setup {}
-    end
-  },
-  -- denols = {
+  -- tsserver = {
+  --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  --   on_attach = function()
+  --     mappings.lsp_mappings()
+  --   end,
+  --   init_options = {
+  --     documentFormatting = false,
+  --   },
+  --   handlers = {
+  --     ["textDocument/publishDiagnostics"] = is_using_eslint,
+  --   },
+  --   on_init = custom_on_init,
+  --   root_dir = vim.loop.cwd,
+  --   extra_setup = function ()
+  --     require("nvim-lsp-ts-utils").setup {}
+  --   end
+  -- },
+  -- rome = {
+  --   cmd = { "/home/elianiva/repos/tools/rome", "lsp" },
   --   filetypes = { "javascript", "typescript", "typescriptreact" },
+  --   on_attach = function()
+  --     mappings.lsp_mappings()
+  --   end,
+  --   on_init = custom_on_init,
   --   root_dir = vim.loop.cwd,
   --   settings = {
-  --     documentFormatting = false
+  --     documentFormatting = true
   --   }
   -- },
+  denols = {
+    filetypes = { "javascript", "typescript", "typescriptreact" },
+    root_dir = vim.loop.cwd,
+    settings = {
+      documentFormatting = true
+    }
+  },
   html = {},
   cssls = {},
   rust_analyzer = {
@@ -115,7 +127,7 @@ local servers = {
       client.resolved_capabilities.completion = false
     end,
     on_init = custom_on_init,
-    filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
     settings = {
       rootMarkers = { ".git", "package.json" },
       languages = {
