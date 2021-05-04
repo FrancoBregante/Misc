@@ -21,21 +21,7 @@ if packer_ok then
     use {'gruvbox-community/gruvbox', opt = false}
     -- use {'folke/tokyonight.nvim', opt = false}
 
-    use {
-      "sunjon/shade.nvim",
-      opt = false,
-      config = function()
-        require("shade").setup {
-          overlay_opacity = 50,
-          opacity_step = 1,
-          keys = {
-            brightness_up = "<C-Up>",
-            brightness_down = "<C-Down>",
-            toggle = "<Leader>s",
-          },
-        }
-      end,
-    }
+    use { "sindrets/diffview.nvim", opt = false }
 
     use {
       "folke/lsp-trouble.nvim",
@@ -55,7 +41,7 @@ if packer_ok then
       opt = true,
       ft = {
         "lua", "html", "css", "typescript",
-        "javascript", "svelte"
+        "javascript", "svelte", "vim"
       },
       config = function()
         require("colorizer").setup {
@@ -115,6 +101,9 @@ if packer_ok then
       opt = false,
       config = function() require("plugins._bufferline") end,
     }
+    use { "akinsho/flutter-tools.nvim", opt = false }
+    use { "simrat39/rust-tools.nvim", opt = false }
+    use { "ray-x/lsp_signature.nvim", opt = false }
     use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
     use { "neovim/nvim-lspconfig", opt = false } -- builtin lsp config
     use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
@@ -173,6 +162,7 @@ if packer_ok then
         "yamatsum/nvim-nonicons"
       }
     }
+    use {'RRethy/vim-illuminate'} -- wait until treesitter priority issue solved
 
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
     use { 'ngmy/vim-rubocop', opt = false }

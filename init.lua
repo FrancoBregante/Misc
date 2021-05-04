@@ -12,7 +12,7 @@ vim.cmd[[
 ]]
 
 -- highlight yanked text for 250ms
-vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "OnYank" }]]
+vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }]]
 
 -- change cwd to current directory
 vim.cmd("cd %:p:h")

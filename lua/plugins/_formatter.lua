@@ -41,6 +41,9 @@ end
 local rubocop = function()
   return {
     exe   = "rubocop",
+    args = {
+      '-a'
+    },
     stdin = true,
   }
 end
@@ -49,6 +52,14 @@ local rustfmt = function()
   return {
     exe   = "rustfmt",
     args  = { "--emit=stdout" },
+    stdin = true,
+  }
+end
+
+local dartfmt = function()
+  return {
+    exe = "dartfmt",
+    args = { "--fix" },
     stdin = true,
   }
 end
@@ -87,6 +98,7 @@ require("formatter").setup({
     ruby       = { rubocop },
     go         = { gofmt },
     lua        = { stylua },
+    dart       = { dartfmt },
   },
 })
 
