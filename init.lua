@@ -1,7 +1,16 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local g = vim.g
 
-vim.g.python3_host_prog = "/usr/bin/python"
+-- map leader key to space
+g.mapleader = " "
+g.maplocalleader = " "
+
+-- disable builtin plugins I don't use
+g.loaded_2html_plugin = 1
+g.loaded_netrw        = 1
+g.loaded_netrwPlugin  = 1
+g.loaded_matchit      = 1
+g.loaded_matchparen   = 1
+g.loaded_spec         = 1
 
 -- prevent typo when pressing `wq` or `q`
 vim.cmd[[
@@ -11,17 +20,12 @@ vim.cmd[[
   cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
 ]]
 
--- highlight yanked text for 250ms
-vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }]]
-
 -- change cwd to current directory
 vim.cmd("cd %:p:h")
 
 local modules = {
-  -- load plugin manager first
   "plugins._packer",
 
-  -- load modules
   "modules._settings",
   "modules._appearances",
   "modules._util",

@@ -126,6 +126,12 @@ nmap { "ga", "<Plug>(EasyAlign)", { silent = true }}
 
 nmap {"<Leader>t", "<Plug>PlenaryTestFile", { silent = true }}
 
+nmap {
+  "<F2>",
+  ":let g:strip_whitespace = !g:strip_whitespace | echo 'Strip whitespace mode toggled!'<CR>",
+  { silent = true },
+}
+
 local curstr = require("curstr").execute
 
 nnoremap {

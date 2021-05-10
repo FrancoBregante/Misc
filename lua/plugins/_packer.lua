@@ -1,21 +1,38 @@
-vim.cmd[[packadd packer.nvim]]
+vim.cmd [[ packadd packer.nvim ]]
+
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({
+    "git",
+    "clone",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  })
+  vim.cmd [[packadd packer.nvim]]
+end
 
 local packer_ok, packer = pcall(require, "packer")
 
 if packer_ok then
   local use = packer.use
+
   packer.init({
+    transitive_opt = false,
     git = {
       clone_timeout = 150
     },
     display = {
-      open_cmd = '80vnew [packer]',
+      open_fn = function()
+        return require("packer.util").float({ border = Util.borders })
+      end,
     }
   })
 
   local plugins = function()
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = false}
+    use {'wbthomason/packer.nvim', opt = true}
 
     use { "joshdick/onedark.vim", opt = false }
     use {'gruvbox-community/gruvbox', opt = false}
@@ -27,6 +44,12 @@ if packer_ok then
       "folke/lsp-trouble.nvim",
       opt = false,
       config = function() require("trouble").setup {} end,
+    }
+
+    use {
+      "mattn/emmet-vim",
+      opt = false,
+      config = function() require("plugins._emmet") end,
     }
 
     use { "windwp/nvim-autopairs", opt = false } -- autopairs brackets, braces etc
@@ -62,10 +85,15 @@ if packer_ok then
         { "nvim-treesitter/nvim-treesitter-textobjects" }, -- "smart" textobjects
         { "windwp/nvim-ts-autotag" },
         { "JoosepAlviste/nvim-ts-context-commentstring" },
-        { "theHamsta/nvim-treesitter-pairs" },
         { 'p00f/nvim-ts-rainbow' },
       },
     } -- mostly for better syntax highlighting, but it has more stuff
+
+    use {
+      "andymass/vim-matchup",
+      opt = false,
+    }
+
     use {
       'hrsh7th/nvim-compe',
       opt = false,
@@ -80,7 +108,7 @@ if packer_ok then
     use {
       "junegunn/goyo.vim",
       ft = { "text", "markdown" },
-      opt = false,
+      opt = true,
     } -- no distraction mode a.k.a zen mode
     use {
       "junegunn/vim-easy-align",
@@ -89,7 +117,7 @@ if packer_ok then
     use {
       'dhruvasagar/vim-table-mode',
       ft = {'text', 'markdown'},
-      opt = false,
+      opt = true,
     } -- table alignment
     use {
       "kyazdani42/nvim-tree.lua",
@@ -105,7 +133,7 @@ if packer_ok then
     use { "simrat39/rust-tools.nvim", opt = false }
     use { "ray-x/lsp_signature.nvim", opt = false }
     use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
-    use { "neovim/nvim-lspconfig", opt = false } -- builtin lsp config
+    use { "neovim/nvim-lspconfig", opt = true } -- builtin lsp config
     use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
     use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
     use {
@@ -116,7 +144,7 @@ if packer_ok then
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope-media-files.nvim" }, -- media preview
         { "nvim-telescope/telescope-frecency.nvim" }, -- media preview
-        { "nvim-telescope/telescope-fzf-native.nvim" },
+        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
     } -- extensible fuzzy finder
     use {
@@ -133,7 +161,7 @@ if packer_ok then
     use {
       "rhysd/git-messenger.vim",
       cmd = "GitMessenger",
-      opt = false,
+      opt = true,
       config = function()
         vim.g.git_messenger_no_default_mappings = true
       end
@@ -141,7 +169,7 @@ if packer_ok then
     use {
       "mhinz/vim-sayonara",
       cmd = 'Sayonara',
-      opt = false
+      opt = true
     } -- better window and buffer management
     use { "AndrewRadev/splitjoin.vim", opt = false }
     use { "tjdevries/astronauta.nvim", opt = false } -- temporary stuff before it got merged upstream
@@ -151,10 +179,34 @@ if packer_ok then
       cmd = "HopWord",
       config = function() require("hop").setup {} end,
     }
-    use { "TimUntersberger/neogit", opt = false }
-    use { "plasticboy/vim-markdown", opt = false }
+    use {
+      "TimUntersberger/neogit",
+      opt = true,
+      cond = function()
+        return Util.is_git_repo(vim.loop.cwd())
+      end,
+      config = function ()
+        require("neogit").setup {
+          disable_signs = false,
+          disable_context_highlighting = true,
+          -- customize displayed signs
+          signs = {
+            -- { CLOSED, OPENED }
+            section = { "", "" },
+            item = { "+", "-" },
+            hunk = { "", "" },
+          },
+        }
+      end
+    }
+    use {
+      "plasticboy/vim-markdown",
+      opt = false,
+      filetype = { "markdown" },
+    }
     use { "notomo/curstr.nvim", opt = false }
     use { "windwp/nvim-spectre", opt = false }
+    use {'RRethy/vim-illuminate'} -- wait until treesitter priority issue solved
     use {
       "kyazdani42/nvim-web-devicons",
       opt = true,
@@ -162,13 +214,16 @@ if packer_ok then
         "yamatsum/nvim-nonicons"
       }
     }
-    use {'RRethy/vim-illuminate'} -- wait until treesitter priority issue solved
-
     use { 'tpope/vim-surround', opt = false } -- surround words with symbol
     use { 'ngmy/vim-rubocop', opt = false }
     use { 'tpope/vim-rails', opt = false }
     use { 'thoughtbot/vim-rspec', opt = false }
     use { 'MTDL9/vim-log-highlighting', opt = false }
+    use {
+      "andweeb/presence.nvim",
+      opt = false,
+      config = function() require("plugins._presence") end,
+    }
   end
 
   packer.startup(plugins)

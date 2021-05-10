@@ -68,10 +68,11 @@ local servers = {
       ["textDocument/publishDiagnostics"] = is_using_eslint,
     },
     on_init = custom_on_init,
-    root_dir = vim.loop.cwd,
-    extra_setup = function ()
+    on_attach = function()
+      mappings.lsp_mappings()
       require("nvim-lsp-ts-utils").setup {}
-    end
+    end,
+    root_dir = vim.loop.cwd,
   },
   --[[ denols = {
     filetypes = { "javascript", "typescript", "typescriptreact" },
@@ -80,9 +81,15 @@ local servers = {
       documentFormatting = true
     }
   }, ]]
-  --[[ html = {},
-  cssls = {}, ]]
-  hls = {
+  html = {
+    cmd = { "vscode-html-language-server", "--stdio" }
+  },
+  cssls = {
+    cmd = { "vscode-css-language-server", "--stdio" }
+  },
+  jsonls = {
+    cmd = { "vscode-json-language-server", "--stdio" },
+    filetypes = { "json", "jsonc" },
     root_dir = vim.loop.cwd
   },
   clangd = {},
@@ -261,6 +268,9 @@ require("rust-tools").setup {
       -- default: "=>"
       other_hints_prefix = "  => ",
     },
+    hover_actions = {
+      border = Util.borders
+    }
   },
   server = {
     on_attach = custom_on_attach,

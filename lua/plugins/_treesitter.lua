@@ -7,6 +7,10 @@ ts_config.setup {
     "python", "rst", "svelte", "ruby", "toml", "json"
   },
 
+  matchup = {
+    enable = true,
+  },
+
   highlight = {
     enable = true,
   },

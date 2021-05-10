@@ -1,17 +1,16 @@
 local remap = vim.api.nvim_set_keymap
 
-vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
-
 -- don't load *all* modules
-vim.g.loaded_compe_snippets_nvim = true
-vim.g.loaded_compe_spell = true
-vim.g.loaded_compe_tags = true
-vim.g.loaded_compe_treesitter = true
-vim.g.loaded_compe_emoji = true
-vim.g.loaded_compe_omni = true
-vim.g.loaded_compe_vsnip = true
-vim.g.loaded_compe_ultisnips = true
-vim.g.loaded_compe_vim_lsc = true
+vim.g.loaded_compe_snippets_nvim = 1
+vim.g.loaded_compe_spell         = 1
+vim.g.loaded_compe_tags          = 1
+vim.g.loaded_compe_treesitter    = 1
+vim.g.loaded_compe_emoji         = 1
+vim.g.loaded_compe_omni          = 1
+vim.g.loaded_compe_vsnip         = 1
+vim.g.loaded_compe_ultisnips     = 1
+vim.g.loaded_compe_vim_lsc       = 1
+
 require("compe").setup({
   enabled              = true,
   debug                = false,

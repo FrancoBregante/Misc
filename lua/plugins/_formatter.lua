@@ -10,7 +10,7 @@ local prettier = function()
       exe  = "prettier",
       args = {
         "--stdin-filepath",
-        vim.api.nvim_buf_get_name(0),
+        vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
         "--config",
         vim.loop.cwd() .. "/.prettierrc"
       },
@@ -22,7 +22,7 @@ local prettier = function()
     exe = "prettier",
     args = {
       "--stdin-filepath",
-      vim.api.nvim_buf_get_name(0),
+      vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
       "--config",
       vim.fn.stdpath("config") .. "/.prettierrc"
     },

@@ -75,47 +75,6 @@ Util.get_word = function()
   return current_word
 end
 
--- don't actually use this but I thought this might come in handy who knows ;)
-Util.get_lines = function()
-  local first_line, last_line = fn.getpos("'<")[2], fn.getpos("'>")[2]
-  local lines = fn.getline(first_line, last_line)
-
-  return lines
-end
-
--- don't actually use this but I thought this might come in handy who knows ;)
-Util.get_visual = function()
-  local first_line, last_line = fn.getpos("'<")[2], fn.getpos("'>")[2]
-  local first_col, last_col = fn.getpos("'<")[3], fn.getpos("'>")[3]
-  local lines = fn.getline(first_line, last_line)
-
-  if #lines == 0 then
-    return ""
-  end
-
-  lines[#lines] = lines[#lines]:sub(0, last_col - 2)
-  lines[1] = lines[1]:sub(first_col - 1, -1)
-
-  return lines
-end
-
--- just for fun :p
-Util.strike_through = function()
-  local first_line, _ = fn.getpos("'<")[2], fn.getpos("'>")[2]
-  local first_col, last_col = fn.getpos("'<")[3], fn.getpos("'>")[3]
-
-  local strike_ns = vim.api.nvim_create_namespace("striked_text")
-
-  vim.api.nvim_buf_add_highlight(
-    0,
-    strike_ns,
-    "StrikeThrough",
-    first_line - 1,
-    first_col - 1,
-    last_col
-  )
-end
-
 -- convert colours
 Util.convert_colour = function(mode)
   local result
@@ -207,6 +166,17 @@ Util.t = function(cmd)
   return vim.api.nvim_replace_termcodes(cmd, true, true, true)
 end
 
+Util.is_git_repo = function(cwd)
+  local fd = vim.loop.fs_scandir(cwd)
+  if fd then
+    while true do
+      local name, typ = vim.loop.fs_scandir_next(fd)
+      if name == nil then return false end
+      if typ == 'directory' and name == '.git' then return true end
+    end
+  end
+end
+
 Util.borders = {
   {"🭽", "FloatBorder"},
   {"▔", "FloatBorder"},
@@ -239,9 +209,9 @@ Util.trigger_completion = function()
   local next_char = vim.fn.getline("."):sub(next_col, next_col)
 
   -- minimal autopairs-like behaviour
-  if prev_char == "{" and next_char == "" then return Util.t("<CR>}<C-o>O") end
-  if prev_char == "[" and next_char == "" then return Util.t("<CR>]<C-o>O") end
-  if prev_char == "(" and next_char == "" then return Util.t("<CR>)<C-o>O") end
+  if prev_char == "{" and next_char ~= "}" then return Util.t("<CR>}<C-o>O") end
+  if prev_char == "[" and next_char ~= "]" then return Util.t("<CR>]<C-o>O") end
+  if prev_char == "(" and next_char ~= ")" then return Util.t("<CR>)<C-o>O") end
   if prev_char == ">" and next_char == "<" then return Util.t("<CR><C-o>O") end -- html indents
   if prev_char == "(" and next_char == ")" then return Util.t("<CR><C-o>O") end -- flutter indents
 

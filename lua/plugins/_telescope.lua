@@ -1,11 +1,10 @@
+local _, telescope = pcall(require, "telescope")
 local actions = require("telescope.actions")
 local previewers = require("telescope.previewers")
 
 local M = {}
 
-local _, telescope = pcall(require, "telescope")
-
-telescope.setup({
+telescope.setup {
   defaults = {
     file_previewer     = previewers.vim_buffer_cat.new,
     grep_previewer     = previewers.vim_buffer_vimgrep.new,
@@ -86,7 +85,7 @@ telescope.setup({
       ["show_domain_icons"] = true,
     },
   },
-})
+}
 
 pcall(require("telescope").load_extension, "fzf") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
