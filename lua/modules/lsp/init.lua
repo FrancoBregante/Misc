@@ -88,7 +88,7 @@ local servers = {
     cmd = { "vscode-css-language-server", "--stdio" }
   },
   jsonls = {
-    cmd = { "vscode-json-language-server", "--stdio" },
+    cmd = { "vscode-json-languageserver", "--stdio" },
     filetypes = { "json", "jsonc" },
     root_dir = vim.loop.cwd
   },
