@@ -46,6 +46,8 @@ if packer_ok then
       config = function() require("trouble").setup {} end,
     }
 
+    use { "editorconfig/editorconfig-vim", opt = false }
+
     use {
       "mattn/emmet-vim",
       opt = false,
@@ -203,6 +205,9 @@ if packer_ok then
       "plasticboy/vim-markdown",
       opt = false,
       filetype = { "markdown" },
+      config = function()
+        vim.g.vim_markdown_frontmatter = 1
+      end
     }
     use { "notomo/curstr.nvim", opt = false }
     use { "windwp/nvim-spectre", opt = false }

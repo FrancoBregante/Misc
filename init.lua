@@ -49,4 +49,3 @@ if not vim.tbl_isempty(errors) then
     print(v)
   end
 end
-
