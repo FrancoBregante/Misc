@@ -58,9 +58,6 @@ local sumneko_root = os.getenv("HOME") .. "/Repos/lua-language-server"
 local servers = {
   tsserver = {
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    on_attach = function()
-      mappings.lsp_mappings()
-    end,
     init_options = {
       documentFormatting = false,
     },
