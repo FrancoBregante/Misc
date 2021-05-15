@@ -46,7 +46,31 @@ if packer_ok then
       config = function() require("trouble").setup {} end,
     }
 
+    -- Highlight, list and search todo comments in your projects
+    use {
+      "folke/todo-comments.nvim",
+      opt = false,
+      config = function() require("plugins._todo") end,
+    }
+
+    use {
+      "folke/which-key.nvim",
+      opt = false,
+      config = function() require("plugins._which-key") end,
+    }
+
     use { "editorconfig/editorconfig-vim", opt = false }
+
+    -- Sooon...
+    -- use {
+    --   "vhyrro/neorg",
+    --   config = function()
+    --     require("neorg").setup {
+    --       load = { ["core.defaults"] = {} },
+    --     }
+    --   end,
+    --   requires = { "nvim-lua/plenary.nvim" },
+    -- }
 
     use {
       "mattn/emmet-vim",
@@ -94,6 +118,9 @@ if packer_ok then
     use {
       "andymass/vim-matchup",
       opt = false,
+      config = function()
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      end
     }
 
     use {
@@ -136,7 +163,6 @@ if packer_ok then
     use { "ray-x/lsp_signature.nvim", opt = false }
     use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
     use { "neovim/nvim-lspconfig", opt = true } -- builtin lsp config
-    use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
     use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
     use {
       "nvim-telescope/telescope.nvim",
@@ -228,16 +254,6 @@ if packer_ok then
       "andweeb/presence.nvim",
       opt = false,
       config = function() require("plugins._presence") end,
-    }
-    use {
-      "folke/which-key.nvim",
-      config = function()
-        require("which-key").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
-        }
-      end
     }
   end
 

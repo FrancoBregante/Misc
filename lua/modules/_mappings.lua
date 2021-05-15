@@ -114,15 +114,11 @@ nnoremap {
   "<CMD>vnew | setlocal buftype=nofile | setlocal bufhidden=hide<CR>",
 }
 
--- cd to currently opened file
-nnoremap { "<Leader>d", "<CMD>cd %:p:h<CR>" }
-
 -- better indenting experience
 vnoremap { "<", "<gv" }
 vnoremap { ">", ">gv" }
 
 xmap { "ga", "<Plug>(EasyAlign)", { silent = true }}
-nmap { "ga", "<Plug>(EasyAlign)", { silent = true }}
 
 nmap {"<Leader>t", "<Plug>PlenaryTestFile", { silent = true }}
 
