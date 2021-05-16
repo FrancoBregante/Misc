@@ -187,14 +187,6 @@ if packer_ok then
       config = function() require("gitlinker").setup {} end,
     }
     use {
-      "rhysd/git-messenger.vim",
-      cmd = "GitMessenger",
-      opt = true,
-      config = function()
-        vim.g.git_messenger_no_default_mappings = true
-      end
-    } -- sort of like git blame but in floating window
-    use {
       "mhinz/vim-sayonara",
       cmd = 'Sayonara',
       opt = true
@@ -217,7 +209,6 @@ if packer_ok then
         require("neogit").setup {
           disable_signs = false,
           disable_context_highlighting = true,
-          -- customize displayed signs
           signs = {
             -- { CLOSED, OPENED }
             section = { "", "" },

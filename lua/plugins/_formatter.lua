@@ -87,6 +87,7 @@ require("formatter").setup({
   logging = true,
   filetype = {
     typescriptreact = { prettier },
+    javascriptreact = { prettier },
     javascript = { prettier },
     typescript = { prettier },
     svelte     = { prettier },

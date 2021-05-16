@@ -90,7 +90,7 @@ nnoremap { "q:", "<Nop>" }
 vnoremap { "<A-y>", "\"+y" }
 
 -- no distraction mode for writing
-nnoremap { "<Leader>gg", "<CMD>Goyo<CR>" }
+-- nnoremap { "<Leader>gg", "<CMD>Goyo<CR>" }
 
 -- run luafile on current file
 -- rl stands for `run lua`
@@ -113,6 +113,10 @@ nnoremap {
   "<Leader>v",
   "<CMD>vnew | setlocal buftype=nofile | setlocal bufhidden=hide<CR>",
 }
+
+vim.cmd [[
+  command! -nargs=0 Center :lua require("modules._center").centered()
+]]
 
 -- better indenting experience
 vnoremap { "<", "<gv" }
