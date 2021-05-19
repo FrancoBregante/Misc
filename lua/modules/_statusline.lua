@@ -6,7 +6,7 @@ local M = {}
 -- possible values are 'arrow' | 'rounded' | 'blank'
 local active_sep = "blank"
 
--- change them if you want different separators
+-- change them if you want to different separatora
 M.separators = {
   arrow   = { "", "" },
   rounded = { "", "" },
@@ -94,14 +94,23 @@ M.get_git_status = function(self)
   ) or ""
 end
 
-M.get_filename = function(self)
-  local filepath = vim.fn.expand("%")
-  if filepath == "" then return "" end
-
-  if self:is_truncated(self.trunc_width.filename) then
-    return string.format(" %%<%s ", filepath)
+M.get_filepath = function(self)
+  local filepath = fn.fnamemodify(fn.expand("%"), ":.:h")
+  if
+    filepath == ""
+    or filepath == "."
+    or self:is_truncated(self.trunc_width.filename)
+  then
+    return " "
   end
-  return string.format(" %%<%s", filepath)
+
+  return string.format(" %%<%s/", filepath)
+end
+
+M.get_filename = function()
+  local filename = fn.expand("%:t")
+  if filename == "" then return "" end
+  return filename
 end
 
 M.get_filetype = function()
@@ -139,14 +148,15 @@ M.set_active = function(self)
   local mode_alt = colors.mode_alt .. self.separators[active_sep][1]
   local git = colors.git .. self:get_git_status()
   local git_alt = colors.git_alt .. self.separators[active_sep][1]
-  local f = fn.expand("%:t")
-  local filename = (function()
-    return colors.inactive .. self:get_filename():gsub(
-    f,
-    -- this is weird..
-    string.format("%%%s%s%%%s", colors.filename, f, colors.inactive)
-    )
-  end)()
+
+  local filename = string.format(
+    "%s%s%s%s%s",
+    colors.inactive,
+    self:get_filepath(),
+    colors.filename,
+    self:get_filename(),
+    colors.inactive
+  )
 
   local filetype_alt = colors.filetype_alt .. self.separators[active_sep][2]
   local filetype = colors.filetype .. self:get_filetype()
@@ -205,3 +215,4 @@ api.nvim_exec([[
   au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline('explorer')
   augroup END
 ]], false)
+
