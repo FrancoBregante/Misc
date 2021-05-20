@@ -6,7 +6,7 @@ vim.env.PRETTIERD_DEFAULT_CONFIG = "~/.config/nvim/.prettierrc"
 
 local prettier = function()
   return {
-    exe = "prettierd",
+    exe = "prettier",
     args = {
       vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
     },
