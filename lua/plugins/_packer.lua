@@ -40,12 +40,6 @@ if packer_ok then
 
     use { "sindrets/diffview.nvim", opt = false }
 
-    use {
-      "folke/lsp-trouble.nvim",
-      opt = false,
-      config = function() require("trouble").setup {} end,
-    }
-
     -- Highlight, list and search todo comments in your projects
     use {
       "folke/todo-comments.nvim",
@@ -161,8 +155,28 @@ if packer_ok then
     use { "akinsho/flutter-tools.nvim", opt = false }
     use { "simrat39/rust-tools.nvim", opt = false }
     use { "ray-x/lsp_signature.nvim", opt = false }
-    use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
-    use { "neovim/nvim-lspconfig", opt = true } -- builtin lsp config
+    use {
+      "neovim/nvim-lspconfig",
+      opt = false,
+    }
+    use {
+      "mfussenegger/nvim-dap",
+      opt = false,
+      config = function() require("modules.dap") end,
+      requires = { "rcarriga/nvim-dap-ui" },
+    }
+    use {
+      "jose-elias-alvarez/nvim-lsp-ts-utils",
+      opt = false,
+      branch = "develop",
+    }
+    use {
+      "jose-elias-alvarez/null-ls.nvim",
+      opt = false,
+      config = function()
+        require("null-ls").setup {}
+      end,
+    }
     use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
     use {
       "nvim-telescope/telescope.nvim",
@@ -218,20 +232,19 @@ if packer_ok then
         }
       end
     }
-    use {
+    --[[ use {
       "plasticboy/vim-markdown",
       opt = false,
       filetype = { "markdown" },
       config = function()
         vim.g.vim_markdown_frontmatter = 1
       end
-    }
+    } ]]
     use { "notomo/curstr.nvim", opt = false }
     use { "windwp/nvim-spectre", opt = false }
-    use {'RRethy/vim-illuminate'} -- wait until treesitter priority issue solved
+    use { "NTBBloodbath/rest.nvim" }
     use {
       "kyazdani42/nvim-web-devicons",
-      opt = true,
       requires = {
         "yamatsum/nvim-nonicons"
       }

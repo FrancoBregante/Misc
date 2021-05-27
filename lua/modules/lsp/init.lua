@@ -1,7 +1,6 @@
 vim.cmd [[packadd nvim-lspconfig]]
 
 local nvim_lsp = require("lspconfig")
-local is_cfg_present = require("modules._util").is_cfg_present
 
 -- override handlers
 pcall(require, "modules.lsp._handlers")
@@ -18,47 +17,8 @@ local custom_capabilities = function()
   return capabilities
 end
 
--- use eslint if the eslint config file present
-local is_using_eslint = function(_, _, result, client_id)
-  if
-    is_cfg_present("/.eslintrc.json")
-    or is_cfg_present("/.eslintrc.js")
-    or is_cfg_present("/.eslintrc.cjs")
-  then
-    return
-  end
-
-  return vim.lsp.handlers["textDocument/publishDiagnostics"](_, _, result, client_id)
-end
-
-local ts_utils = function(client)
-  local ts_utils = require("nvim-lsp-ts-utils")
-  ts_utils.setup {
-    eslint_bin = "eslint_d",
-    eslint_args = {"-f", "json", "--stdin", "--stdin-filename", "$FILENAME"},
-    eslint_enable_disable_comments = true,
-    eslint_enable_diagnostics = true,
-    eslint_diagnostics_debounce = 250,
-  }
-  ts_utils.setup_client(client)
-end
-
 local servers = {
-  tsserver = {
-    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    init_options = {
-      documentFormatting = false,
-    },
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
-    on_init = Util.lsp_on_init,
-    on_attach = function(client)
-      require("modules.lsp._mappings").lsp_mappings()
-      ts_utils(client)
-    end,
-    root_dir = vim.loop.cwd,
-  },
+  tsserver = require("modules.lsp._tsserver").config,
   --[[ denols = {
     filetypes = { "javascript", "typescript", "typescriptreact" },
     root_dir = vim.loop.cwd,
@@ -71,8 +31,8 @@ local servers = {
     filetypes = { "json", "jsonc" },
     root_dir = vim.loop.cwd
   },
-  html = { cmd = { "vscode-html-language-server", "--stdio" } },
-  cssls = { cmd = { "vscode-css-language-server", "--stdio" } },
+  html = { cmd = { "html-languageserver", "--stdio" } },
+  cssls = { cmd = { "css-languageserver", "--stdio" } },
   clangd = {},
   solargraph = {
     cmd = {"solargraph", "stdio"},
@@ -96,16 +56,13 @@ local servers = {
   svelte = {
     on_attach = function(client)
       require("modules.lsp._mappings").lsp_mappings()
-      ts_utils(client)
+      require("modules.lsp._tsserver").ts_utils(client)
 
       client.server_capabilities.completionProvider.triggerCharacters = {
         ".", '"', "'", "`", "/", "@", "*",
         "#", "$", "+", "^", "(", "[", "-", ":"
       }
     end,
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
     on_init = Util.lsp_on_init,
     filetypes = { "svelte" },
     settings = {
