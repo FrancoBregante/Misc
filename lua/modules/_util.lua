@@ -1,5 +1,5 @@
 local Job = require("plenary.job")
-local fn = vim.fn
+local fn, api = vim.fn, vim.api
 
 _G.Util = {}
 
@@ -165,7 +165,7 @@ Util.spinner = function()
 end
 
 Util.t = function(cmd)
-  return vim.api.nvim_replace_termcodes(cmd, true, true, true)
+  return api.nvim_replace_termcodes(cmd, true, true, true)
 end
 
 Util.is_git_repo = function(cwd)
@@ -198,28 +198,6 @@ Util.borders = {
   -- {"█", "Bordaa"}
 }
 
--- see lua/plugins/_compe.lua for context
-Util.trigger_completion = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info()["selected"] ~= -1 then
-      return vim.fn["compe#confirm"]()
-    end
-  end
-
-  local prev_col, next_col = vim.fn.col(".") - 1, vim.fn.col(".")
-  local prev_char = vim.fn.getline("."):sub(prev_col, prev_col)
-  local next_char = vim.fn.getline("."):sub(next_col, next_col)
-
-  -- minimal autopairs-like behaviour
-  if prev_char == "{" and next_char ~= "}" then return Util.t("<CR>}<C-o>O") end
-  if prev_char == "[" and next_char ~= "]" then return Util.t("<CR>]<C-o>O") end
-  if prev_char == "(" and next_char ~= ")" then return Util.t("<CR>)<C-o>O") end
-  if prev_char == ">" and next_char == "<" then return Util.t("<CR><C-o>O") end -- html indents
-  if prev_char == "(" and next_char == ")" then return Util.t("<CR><C-o>O") end -- flutter indents
-
-  return Util.t("<CR>")
-end
-
 Util.lsp_on_attach = function()
   require("modules.lsp._mappings").lsp_mappings()
   require("lsp_signature").on_attach {
@@ -234,10 +212,20 @@ end
 
 Util.lsp_on_init = function()
   print("Language Server Protocol started!")
-
-  if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
-  end
 end
+
+Util.foldtext = function()
+  local start = vim.v.foldstart
+  local endl = vim.v.foldend
+  local line = api.nvim_buf_get_lines(0, start - 1, start, true)[1]
+  local width = api.nvim_win_get_width(0)
+  local total = string.format("(%s) lines", endl - start + 1)
+
+  return string.format(
+    "%s… %s%s",
+    line, string.rep(" ", width - #line - #total - 6), total
+  )
+end
+vim.o.foldtext = "v:lua.Util.foldtext()"
 
 return Util

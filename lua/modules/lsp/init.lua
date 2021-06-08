@@ -1,6 +1,6 @@
-vim.cmd [[packadd nvim-lspconfig]]
+vim.cmd([[packadd nvim-lspconfig]])
 
-local nvim_lsp = require("lspconfig")
+local lspconfig = require("lspconfig")
 
 -- override handlers
 pcall(require, "modules.lsp._handlers")
@@ -19,6 +19,7 @@ end
 
 local servers = {
   tsserver = require("modules.lsp._tsserver").config,
+  -- rust_analyzer = {},
   --[[ denols = {
     filetypes = { "javascript", "typescript", "typescriptreact" },
     root_dir = vim.loop.cwd,
@@ -29,34 +30,30 @@ local servers = {
   jsonls = {
     cmd = { "vscode-json-languageserver", "--stdio" },
     filetypes = { "json", "jsonc" },
-    root_dir = vim.loop.cwd
+    root_dir = vim.loop.cwd,
   },
   html = { cmd = { "html-languageserver", "--stdio" } },
   cssls = { cmd = { "css-languageserver", "--stdio" } },
   clangd = {},
+  gopls = {},
   solargraph = {
     cmd = {"solargraph", "stdio"},
     filetypes = { "ruby" },
     root_dir = vim.loop.cwd,
     settings = {
       solargraph = {
-        -- commandPath = "/home/francisl/.local/share/gem/ruby/3.0.0/bin/solargraph",
         diagnostics = true,
         logLevel = "debug",
         transport = "stdio",
       },
     },
   },
-  pyright = {
-    root_dir = vim.loop.cwd
-  },
-  gopls = {
-    root_dir = vim.loop.cwd,
-  },
+  pyright = {},
   svelte = {
     on_attach = function(client)
       require("modules.lsp._mappings").lsp_mappings()
       require("modules.lsp._tsserver").ts_utils(client)
+      require("null-ls").setup {}
 
       client.server_capabilities.completionProvider.triggerCharacters = {
         ".", '"', "'", "`", "/", "@", "*",
@@ -78,7 +75,7 @@ local servers = {
 }
 
 for name, opts in pairs(servers) do
-  local client = nvim_lsp[name]
+  local client = lspconfig[name]
   if opts.extra_setup then
     opts.extra_setup()
   end
