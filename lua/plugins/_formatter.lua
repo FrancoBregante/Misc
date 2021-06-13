@@ -2,7 +2,7 @@ vim.cmd([[packadd formatter.nvim]])
 
 local k = require("astronauta.keymap")
 local nnoremap = k.nnoremap
-vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. "/.prettierrc"
+vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc"
 
 local prettier = function()
   return {
@@ -24,18 +24,18 @@ end
 
 local rubocop = function()
   return {
-    exe   = "rubocop",
+    exe = "rubocop",
     args = {
-      '-a'
+      "-x",
     },
-    stdin = true,
+    stdin = false,
   }
 end
 
 local rustfmt = function()
   return {
-    exe   = "rustfmt",
-    args  = { "--emit=stdout" },
+    exe = "rustfmt",
+    args = { "--emit=stdout" },
     stdin = true,
   }
 end
@@ -50,7 +50,7 @@ end
 
 local gofmt = function()
   return {
-    exe   = "gofumpt",
+    exe = "gofumpt",
     stdin = true,
   }
 end
@@ -74,16 +74,16 @@ require("formatter").setup({
     javascriptreact = { prettier },
     javascript = { prettier },
     typescript = { prettier },
-    svelte     = { prettier },
-    css        = { prettier },
-    jsonc      = { prettier },
-    json       = { prettier },
-    html       = { prettier },
-    rust       = { rustfmt },
-    ruby       = { rubocop },
-    go         = { gofmt },
-    lua        = { stylua },
-    dart       = { dartfmt },
+    svelte = { prettier },
+    css = { prettier },
+    jsonc = { prettier },
+    json = { prettier },
+    html = { prettier },
+    rust = { rustfmt },
+    ruby = { rubocop },
+    go = { gofmt },
+    lua = { stylua },
+    dart = { dartfmt },
   },
 })
 

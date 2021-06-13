@@ -1,6 +1,6 @@
 local sumneko_root = os.getenv("HOME") .. "/Repos/lua-language-server"
-
 local library = {}
+local M = {}
 
 local add = function(lib)
   for _, p in pairs(vim.fn.expand(lib, false, true)) do
@@ -13,7 +13,7 @@ end
 add("$VIMRUNTIME")
 add("~/.config/nvim")
 
-require("lspconfig").sumneko_lua.setup {
+M.config = {
   cmd = {
     sumneko_root .. "/bin/Linux/lua-language-server",
     "-E",
@@ -41,8 +41,15 @@ require("lspconfig").sumneko_lua.setup {
       diagnostics = {
         enable = true,
         globals = {
-          "vim", "describe", "it", "before_each", "after_each",
-          "awesome", "theme", "client", "P",
+          "vim",
+          "describe",
+          "it",
+          "before_each",
+          "after_each",
+          "awesome",
+          "theme",
+          "client",
+          "P",
         },
       },
       workspace = {
@@ -52,3 +59,5 @@ require("lspconfig").sumneko_lua.setup {
     },
   },
 }
+
+return M
