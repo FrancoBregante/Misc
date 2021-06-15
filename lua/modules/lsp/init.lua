@@ -29,12 +29,11 @@ local servers = {
   clangd = {},
   gopls = {},
   solargraph = {
-    cmd = { "solargraph", "stdio" },
-    filetypes = { "ruby" },
     root_dir = vim.loop.cwd,
     settings = {
       solargraph = {
-        diagnostics = true,
+        diagnostic = true,
+        formatting = true,
         logLevel = "debug",
         transport = "stdio",
       },
