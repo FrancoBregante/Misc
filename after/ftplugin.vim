@@ -57,3 +57,8 @@ augroup Yank
   au!
   au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }
 augroup END
+
+augroup Emmet
+  au!
+  au FileType html,javascript,typescript,javascriptreact,typescriptreact,svelte EmmetInstall
+augroup END

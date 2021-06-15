@@ -1,4 +1,4 @@
-local k = require("astronauta.keymap")
+local k = require "modules._keymap"
 
 local noremap = k.noremap
 local nnoremap = k.nnoremap
@@ -26,22 +26,22 @@ nmap { "<Leader>rr", "<Plug>RestNvim" }
 -- toggle telescope.nvim
 nnoremap {
   "<C-p>",
-  require("plugins._telescope").files,
+  require("modules._telescope").files,
   { silent = true },
 }
 nnoremap {
   "<C-f>",
-  require("plugins._telescope").grep_prompt,
+  require("modules._telescope").grep_prompt,
   { silent = true },
 }
 nnoremap{
   "<Leader>fb",
-  require("plugins._telescope").buffer_fuzzy,
+  require("modules._telescope").buffer_fuzzy,
   { silent = true },
 }
 nnoremap {
   "<Leader>ff",
-  require("plugins._telescope").frecency,
+  require("modules._telescope").frecency,
   { silent = true },
 }
 -- nnoremap {
@@ -51,12 +51,17 @@ nnoremap {
 -- }
 -- nnoremap {
 --   "<Leader>fa",
---   require("plugins._telescope").arecibo,
+--   require("modules._telescope").arecibo,
 --   { silent = true },
 -- }
 nnoremap {
   "<Leader>fl",
-  require("plugins._telescope").file_browser,
+  require("modules._telescope").file_browser,
+  { silent = true },
+}
+nnoremap {
+  "<Leader>fg",
+  require("modules._telescope").git_commits,
   { silent = true },
 }
 
@@ -90,7 +95,7 @@ nnoremap { "Q", "<Nop>" }
 nnoremap { "q:", "<Nop>" }
 
 -- copy to system clipboard
-vnoremap { "<A-y>", "\"+y" }
+vnoremap { "<A-y>", '"+y' }
 
 -- no distraction mode for writing
 -- nnoremap { "<Leader>gg", "<CMD>Goyo<CR>" }
@@ -125,9 +130,9 @@ vim.cmd [[
 vnoremap { "<", "<gv" }
 vnoremap { ">", ">gv" }
 
-xmap { "ga", "<Plug>(EasyAlign)", { silent = true }}
+xmap { "ga", "<Plug>(EasyAlign)", { silent = true } }
 
-nmap {"<Leader>t", "<Plug>PlenaryTestFile", { silent = true }}
+nmap { "<Leader>t", "<Plug>PlenaryTestFile", { silent = true } }
 
 nmap {
   "<F2>",
@@ -141,12 +146,12 @@ nnoremap {
   "gf",
   function()
     if vim.bo.filetype == "lua" then
-      return curstr("vim/lua")
+      return curstr "vim/lua"
     end
 
-    return curstr("file/path")
+    return curstr "file/path"
   end,
-  { silent = true }
+  { silent = true },
 }
 
 nmap {"<Leader>rta", "<CMD>call RunAllSpecs()<CR>", { silent = true }}

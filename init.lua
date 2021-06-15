@@ -24,14 +24,10 @@ vim.cmd[[
 vim.cmd("cd %:p:h")
 
 local modules = {
-  "plugins._packer",
-
   "modules._settings",
   "modules._appearances",
   "modules._util",
   "modules._mappings",
-
-   -- lsp stuff
   "modules.lsp"
 }
 
