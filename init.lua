@@ -30,7 +30,6 @@ local modules = {
   "modules._appearances",
   "modules._util",
   "modules._mappings",
-  "modules._statusline",
 
    -- lsp stuff
   "modules.lsp"

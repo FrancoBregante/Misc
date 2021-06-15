@@ -36,7 +36,7 @@ local plugins = function()
   use({ "wbthomason/packer.nvim", opt = true })
 
   use({
-    "joshdick/onedark.vim",
+    "folke/tokyonight.nvim",
     opt = false,
     requires = { "rktjmp/lush.nvim" },
   })
@@ -321,6 +321,14 @@ local plugins = function()
       require("plugins._presence")
     end,
   })
+  use({
+    "hoob3rt/lualine.nvim",
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = function()
+      require("plugins._lualine")
+    end,
+  })
+
 end
 
 packer.startup(plugins)
