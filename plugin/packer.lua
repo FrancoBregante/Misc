@@ -89,11 +89,8 @@ local plugins = function()
   }
 
   use {
-    "kyazdani42/nvim-web-devicons",
-    opt = true,
-    requires = {
-      "yamatsum/nvim-nonicons",
-    },
+    'yamatsum/nvim-nonicons',
+    requires = {'kyazdani42/nvim-web-devicons'}
   }
 
   use { "kyazdani42/nvim-tree.lua", opt = false }
@@ -133,10 +130,7 @@ local plugins = function()
   use {
     "mfussenegger/nvim-dap",
     opt = false,
-    config = function()
-      require("modules.dap")
-    end,
-    requires = { "rcarriga/nvim-dap-ui" },
+    config = function() require("modules.dap") end
   }
 
   use { "akinsho/flutter-tools.nvim", opt = false }
@@ -253,10 +247,7 @@ local plugins = function()
     "andweeb/presence.nvim",
     opt = false,
   }
-  use {
-    "hoob3rt/lualine.nvim",
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
-  }
+  use { "hoob3rt/lualine.nvim" }
 end
 
 packer.startup(plugins)
