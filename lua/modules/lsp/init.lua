@@ -1,4 +1,4 @@
-local lspconfig = require("lspconfig")
+local lspconfig = require "lspconfig"
 
 -- override handlers
 pcall(require, "modules.lsp._handlers")
@@ -14,16 +14,12 @@ local servers = {
     filetypes = { "javascript", "typescript", "typescriptreact" },
     root_dir = vim.loop.cwd,
     settings = {
-      documentFormatting = true
-    }
+      documentFormatting = true,
+    },
   },
   sumneko_lua = require("modules.lsp._sumneko").config,
-  rust_analyzer = require("modules.lsp._rust").config,
-  flutter = require("modules.lsp._flutter").config,
-  -- tsserver = require("modules.lsp._tsserver").config,
   jsonls = require("modules.lsp._json").config,
   svelte = require("modules.lsp._svelte").config,
-  jdtls = require("modules.lsp._jdtls").config,
   html = { cmd = { "html-languageserver", "--stdio" } },
   cssls = { cmd = { "css-languageserver", "--stdio" } },
   clangd = {},
@@ -33,7 +29,6 @@ local servers = {
     settings = {
       solargraph = {
         diagnostic = true,
-        formatting = true,
         logLevel = "debug",
         transport = "stdio",
       },
@@ -48,7 +43,7 @@ for name, opts in pairs(servers) do
     opts()
   else
     local client = lspconfig[name]
-    client.setup({
+    client.setup {
       cmd = opts.cmd or client.cmd,
       filetypes = opts.filetypes or client.filetypes,
       on_attach = opts.on_attach or Util.lsp_on_attach,
@@ -57,6 +52,6 @@ for name, opts in pairs(servers) do
       root_dir = opts.root_dir or client.root_dir,
       capabilities = opts.capabilities or custom_capabilities(),
       settings = opts.settings or {},
-    })
+    }
   end
 end

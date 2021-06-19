@@ -1,22 +1,7 @@
-local fn = vim.fn
-local install_path = fn.stdpath "data"  .. "/site/pack/packer/opt/packer.nvim"
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system {
-    "git",
-    "clone",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  vim.cmd([[packadd packer.nvim]])
-end
-
 local packer_ok, packer = pcall(require, "packer")
 if not packer_ok then
   return
 end
-
-local use = packer.use
 
 packer.init({
   transitive_opt = false,
@@ -30,86 +15,73 @@ packer.init({
   },
 })
 
-local plugins = function()
-  use { "wbthomason/packer.nvim", opt = true }
+local plugins = {
+  { "wbthomason/packer.nvim" },
 
-  use {
+  require("plugins.compe").plugin,
+  require("plugins.gitsigns").plugin,
+  require("plugins.null-ls").plugin,
+  require("plugins.nvim-bufferline").plugin,
+  require("plugins.nvim-jdtls").plugin,
+  require("plugins.nvim-lspconfig").plugin,
+  require("plugins.nvim-tree").plugin,
+  require("plugins.rest-nvim").plugin,
+  require("plugins.rust-tools").plugin,
+  require("plugins.flutter-tools").plugin,
+  require("plugins.telescope").plugin,
+  require("plugins.treesitter").plugin,
+  require("plugins.tsserver").plugin,
+  require("plugins.which-key").plugin,
+
+  {
     "folke/tokyonight.nvim",
     opt = false,
-    requires = { "rktjmp/lush.nvim" },
-  }
+    config = function()
+      vim.cmd [[colorscheme tokyonight]]
+      vim.g.tokyonight_style = "night"
+    end
+  },
 
-  use {
+  {
     "plasticboy/vim-markdown",
-    opt = true,
     filetype = { "markdown" },
     config = function()
       vim.g.vim_markdown_folding_disabled = 1
       vim.g.vim_markdown_frontmatter = 1
     end,
-  }
+  },
 
-  use {
+  {
     "norcalli/nvim-colorizer.lua",
-    opt = true,
-    ft = {
-      "lua",
-      "html",
-      "css",
-      "typescript",
-      "javascript",
-      "svelte",
-      "vim",
-    },
+    cmd = "ColorizerToggle",
     config = function()
-      require("colorizer").setup({
+      require("colorizer").setup {
         ["*"] = {
           css = true,
           css_fn = true,
           mode = "background",
         },
-      })
+      }
     end,
-  }
+  },
 
-  use { "folke/which-key.nvim", opt = false }
-
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    opt = false,
-    requires = {
-      {
-        "nvim-treesitter/playground",
-        opt = true,
-        cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
-      },
-      { "nvim-treesitter/nvim-treesitter-textobjects" },
-      { "JoosepAlviste/nvim-ts-context-commentstring" },
-    },
-  }
-
-  use {
-    'yamatsum/nvim-nonicons',
-    requires = {'kyazdani42/nvim-web-devicons'}
-  }
-
-  use { "kyazdani42/nvim-tree.lua", opt = false }
-
-  use { "akinsho/nvim-bufferline.lua", opt = false }
-
-  use {
-    "sindrets/diffview.nvim",
-    opt = true,
-    cmd = { "DiffViewOpen" },
-  }
-
-  use { "lewis6991/gitsigns.nvim", opt = false }
-
-  use {
-    "TimUntersberger/neogit",
-    opt = false,
+  {
+    "kyazdani42/nvim-web-devicons",
     config = function()
-      require("neogit").setup({
+      require("nvim-web-devicons").setup { default = true }
+    end,
+    requires = {
+      -- requires nonicons font installed
+      { "yamatsum/nvim-nonicons", after = "nvim-web-devicons" },
+    },
+  },
+
+  { "sindrets/diffview.nvim" },
+
+  {
+    "TimUntersberger/neogit",
+    config = function()
+      require("neogit").setup {
         disable_signs = false,
         disable_context_highlighting = true,
         signs = {
@@ -121,61 +93,24 @@ local plugins = function()
         integrations = {
           diffview = true,
         },
-      })
+      }
     end,
-  }
+    requires = {
+      "sindrets/diffview.nvim",
+    },
+  },
 
-  use { "neovim/nvim-lspconfig", opt = false }
-
-  use {
+  {
     "mfussenegger/nvim-dap",
-    opt = false,
-    config = function() require("modules.dap") end
-  }
-
-  use { "akinsho/flutter-tools.nvim", opt = false }
-
-  use { "simrat39/rust-tools.nvim", opt = false }
-
-  use { "ray-x/lsp_signature.nvim", opt = false }
-
-  use { "jose-elias-alvarez/nvim-lsp-ts-utils", opt = false }
-
-  use { "jose-elias-alvarez/null-ls.nvim", opt = false }
-
-  use { "mfussenegger/nvim-jdtls", opt = false }
-
-  use {
-    "hrsh7th/nvim-compe",
-    opt = false,
-    requires = {
-      { "L3MON4D3/LuaSnip" },
-    },
-  }
-
-  use {
-    "nvim-telescope/telescope.nvim",
-    opt = false,
     config = function()
-      require("modules._telescope")
+      require "modules.dap"
     end,
-    requires = {
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope-media-files.nvim" },
-      { "nvim-telescope/telescope-frecency.nvim" },
-      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-      { "nvim-telescope/telescope-dap.nvim" },
-    },
-  }
+  },
 
-  use { "tami5/sql.nvim", opt = false }
+  { "tami5/sql.nvim" },
 
-  use { "editorconfig/editorconfig-vim", opt = false }
-
-  use {
+  {
     "lervag/vimtex",
-    opt = false,
     config = function()
       vim.g.vimtex_quickfix_enabled = false
       vim.g.vimtex_view_method = "zathura"
@@ -189,38 +124,45 @@ local plugins = function()
         },
       }
     end,
-  }
+  },
 
-  use { "tpope/vim-commentary", opt = false }
+  { "tpope/vim-commentary", keys = "gc" },
 
-  use { "NTBBloodbath/rest.nvim", opt = false }
-
-  use { "mattn/emmet-vim", opt = false }
-
-  use { "junegunn/vim-easy-align", opt = false }
-
-  use {
-    "phaazon/hop.nvim",
-    opt = true,
-    cmd = "HopWord",
+  {
+    "mattn/emmet-vim",
     config = function()
-      require("hop").setup({})
+      vim.g.user_emmet_install_global = 0
+      vim.g.user_emmet_leader_key = ","
     end,
-  }
+  },
 
-  use { "AndrewRadev/splitjoin.vim", opt = false }
+  { "junegunn/vim-easy-align", keys = "<Plug>(EasyAlign)" },
 
-  use {
-    "dhruvasagar/vim-table-mode",
-    ft = { "text", "markdown" },
-    opt = true,
-  }
+  {
+    "phaazon/hop.nvim",
+    cmd = "HopWord",
+    setup = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<Leader>w",
+        "<CMD>HopWord<CR>",
+        { noremap = true }
+      )
+    end,
+    config = function()
+      require("hop").setup {}
+    end,
+  },
 
-  use { "machakann/vim-sandwich", opt = false }
+  { "AndrewRadev/splitjoin.vim", keys = "gS" },
 
-  use {
+  { "dhruvasagar/vim-table-mode", ft = { "text", "markdown" } },
+
+  { "machakann/vim-sandwich", keys = "s" },
+
+  {
     "andymass/vim-matchup",
-    opt = false,
+    event = "CursorMoved",
     setup = function()
       vim.g.matchup_matchparen_offscreen = {
         method = "popup",
@@ -228,26 +170,19 @@ local plugins = function()
         highlight = "Normal",
       }
     end,
-  }
+  },
 
-  use {
-    "mhinz/vim-sayonara",
-    opt = true,
-    cmd = "Sayonara",
-  }
+  { "mhinz/vim-sayonara", cmd = "Sayonara" },
 
-  use { "notomo/curstr.nvim", opt = false }
+  { "tpope/vim-surround" },
+  { "ruby-formatter/rufo-vim" },
+  { "thoughtbot/vim-rspec" },
+  { "MTDL9/vim-log-highlighting" },
+  require("plugins.lualine").plugin,
+}
 
-  use { "tpope/vim-surround", opt = false }
-  use { "ngmy/vim-rubocop", opt = false }
-  use { "tpope/vim-rails", opt = false }
-  use { "thoughtbot/vim-rspec", opt = false }
-  use { "MTDL9/vim-log-highlighting", opt = false }
-  use {
-    "andweeb/presence.nvim",
-    opt = false,
-  }
-  use { "hoob3rt/lualine.nvim" }
-end
-
-packer.startup(plugins)
+packer.startup(function(use)
+  for _, v in pairs(plugins) do
+    use(v)
+  end
+end)

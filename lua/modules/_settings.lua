@@ -35,6 +35,7 @@ local options = {
     vert = "│",
     eob = " ",
     fold = " ",
+    diff = " ",
   }, -- make vertical split sign better
   foldmethod     = "marker",
   -- foldexpr       = "nvim_treesitter#foldexpr()",
