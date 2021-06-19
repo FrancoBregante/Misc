@@ -73,12 +73,8 @@ class _$1 extends State<$1> {
 
   ls.snippets = {
     all = {
-      ls.parser.parse_snippet({ trig = "todo" }, "TODO(elianiva): ${1:todo}"),
-      ls.parser.parse_snippet({ trig = "fixme" }, "FIXME(elianiva): ${1:fixme}"),
-    },
-    php = {
-      ls.parser.parse_snippet({ trig = "php" }, "<?php $0 ?>"),
-      ls.parser.parse_snippet({ trig = "phpp" }, "<?= $0 ?>"),
+      ls.parser.parse_snippet({ trig = "todo" }, "TODO(francisl): ${1:todo}"),
+      ls.parser.parse_snippet({ trig = "fixme" }, "FIXME(francisl): ${1:fixme}"),
     },
     html = html,
     dart = dart,
