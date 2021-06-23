@@ -4,28 +4,27 @@ M.plugin = {
   "nvim-telescope/telescope.nvim",
   after = "nvim-web-devicons",
   requires = {
-    -- An implementation of the Popup API from vim in Neovim.
-    { "nvim-lua/popup.nvim" },
-
-    -- plenary: full; complete; entire; absolute; unqualified.
-    { "nvim-lua/plenary.nvim" },
-
-    -- Preview media files in Telescope
-    { "nvim-telescope/telescope-media-files.nvim" },
-
-    -- A telescope.nvim extension that offers intelligent prioritization
-    -- when selecting files from your editing history.
-    { "nvim-telescope/telescope-frecency.nvim" },
-
-    -- FZF style sorter
-    { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-
-    -- Integration for nvim-dap with telescope.nvim
-    { "nvim-telescope/telescope-dap.nvim" },
+    {
+      "nvim-telescope/telescope-media-files.nvim",
+      after = "telescope.nvim"
+    },
+    {
+      "nvim-telescope/telescope-frecency.nvim",
+      after = "telescope.nvim"
+    },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      run = "make",
+    },
+    {
+      "nvim-telescope/telescope-dap.nvim",
+      after = "telescope.nvim"
+    },
+    { "tami5/sql.nvim" },
   },
   config = function()
     require("plugins.telescope").config()
-  end
+  end,
 }
 
 M.config = function()
@@ -155,11 +154,10 @@ M.config = function()
 
   local builtin = require "telescope.builtin"
 
-  pcall(require("telescope").load_extension, "fzf") -- superfast sorter
-  pcall(require("telescope").load_extension, "media_files") -- media preview
-  pcall(require("telescope").load_extension, "frecency") -- frecency
-  pcall(require("telescope").load_extension, "dap") -- DAP integrations
-  pcall(require("telescope").load_extension, "npm") -- NPM integrations
+  pcall(telescope.load_extension, "fzf") -- superfast sorter
+  pcall(telescope.load_extension, "media_files") -- media preview
+  pcall(telescope.load_extension, "frecency") -- frecency
+  pcall(telescope.load_extension, "dap") -- DAP integrations
 
   M.arecibo = function()
     telescope.extensions.arecibo.websearch(M.no_preview())
@@ -167,10 +165,6 @@ M.config = function()
 
   M.frecency = function()
     telescope.extensions.frecency.frecency(M.no_preview())
-  end
-
-  M.npm_script = function()
-    telescope.extensions.npm.scripts(M.no_preview())
   end
 
   M.grep_prompt = function()
@@ -190,7 +184,6 @@ M.config = function()
   nnoremap { "<Leader>fa", M.arecibo, { silent = true } }
   nnoremap { "<Leader>fl", builtin.file_browser, { silent = true } }
   nnoremap { "<Leader>fg", builtin.git_commits, { silent = true } }
-  nnoremap { "<Leader>fns", M.npm_script, { silent = true } }
 end
 
 return M

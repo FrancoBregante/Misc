@@ -1,10 +1,11 @@
+vim.cmd [[ packadd packer.nvim ]]
+
 local packer_ok, packer = pcall(require, "packer")
 if not packer_ok then
   return
 end
 
 packer.init({
-  transitive_opt = false,
   git = {
     clone_timeout = 300,
   },
@@ -16,14 +17,13 @@ packer.init({
 })
 
 local plugins = {
-  { "wbthomason/packer.nvim" },
+  { "wbthomason/packer.nvim", opt = true },
 
   require("plugins.compe").plugin,
   require("plugins.gitsigns").plugin,
   require("plugins.null-ls").plugin,
   require("plugins.nvim-bufferline").plugin,
   require("plugins.nvim-jdtls").plugin,
-  require("plugins.nvim-lspconfig").plugin,
   require("plugins.nvim-tree").plugin,
   require("plugins.rest-nvim").plugin,
   require("plugins.rust-tools").plugin,
@@ -32,6 +32,10 @@ local plugins = {
   require("plugins.treesitter").plugin,
   require("plugins.tsserver").plugin,
   require("plugins.which-key").plugin,
+
+  { "nvim-lua/plenary.nvim" },
+
+  { "nvim-lua/popup.nvim" },
 
   {
     "folke/tokyonight.nvim",
@@ -43,9 +47,17 @@ local plugins = {
   },
 
   {
-    "plasticboy/vim-markdown",
-    filetype = { "markdown" },
+    "neovim/nvim-lspconfig",
+    event = "BufRead",
     config = function()
+      require "modules.lsp"
+    end,
+  },
+
+  {
+    "plasticboy/vim-markdown",
+    filetype = "markdown",
+    setup = function()
       vim.g.vim_markdown_folding_disabled = 1
       vim.g.vim_markdown_frontmatter = 1
     end,
@@ -80,6 +92,7 @@ local plugins = {
 
   {
     "TimUntersberger/neogit",
+    cmd = "Neogit",
     config = function()
       require("neogit").setup {
         disable_signs = false,
@@ -96,22 +109,24 @@ local plugins = {
       }
     end,
     requires = {
-      "sindrets/diffview.nvim",
+      {
+        "sindrets/diffview.nvim",
+        after = "neogit",
+      },
     },
   },
 
   {
     "mfussenegger/nvim-dap",
+    keys = "<Leader>d",
     config = function()
       require "modules.dap"
     end,
   },
 
-  { "tami5/sql.nvim" },
-
   {
     "lervag/vimtex",
-    config = function()
+    setup = function()
       vim.g.vimtex_quickfix_enabled = false
       vim.g.vimtex_view_method = "zathura"
       vim.g.vimtex_compiler_latexmk = {
@@ -129,10 +144,47 @@ local plugins = {
   { "tpope/vim-commentary", keys = "gc" },
 
   {
+    "mapkts/enwise",
+    event = "BufRead",
+    setup = function()
+      vim.g.enwise_enable_globally = 1
+    end
+  },
+
+  {
     "mattn/emmet-vim",
-    config = function()
+    setup = function()
       vim.g.user_emmet_install_global = 0
       vim.g.user_emmet_leader_key = ","
+    end,
+  },
+
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    config = function()
+      require("zen-mode").setup {
+        window = {
+          backdrop = 1,
+          width = 80, -- width of the Zen window
+          height = 32, -- height of the Zen window
+          linebreak = true,
+          wrap = true,
+        },
+        plugins = {
+          options = {
+            enabled = true,
+            ruler = false,
+            showcmd = false,
+          },
+          gitsigns = { enabled = true }, -- disables git signs
+          tmux = { enabled = false }, -- disables the tmux statusline
+        },
+        on_open = function(win)
+          vim.api.nvim_win_set_option(win, "wrap", true)
+          vim.api.nvim_win_set_option(win, "linebreak", true)
+        end,
+      }
     end,
   },
 
@@ -174,11 +226,19 @@ local plugins = {
 
   { "mhinz/vim-sayonara", cmd = "Sayonara" },
 
-  { "tpope/vim-surround" },
-  { "ruby-formatter/rufo-vim" },
-  { "thoughtbot/vim-rspec" },
-  { "MTDL9/vim-log-highlighting" },
   require("plugins.lualine").plugin,
+  {
+    "ruby-formatter/rufo-vim",
+    cmd = "Rufo",
+  },
+  {
+    "thoughtbot/vim-rspec",
+    keys = "<Leader>rt",
+  },
+  {
+    "MTDL9/vim-log-highlighting",
+    ft = "log",
+  },
 }
 
 packer.startup(function(use)

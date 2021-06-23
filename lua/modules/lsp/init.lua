@@ -10,13 +10,13 @@ local custom_capabilities = function()
 end
 
 local servers = {
-  denols = {
-    filetypes = { "javascript", "typescript", "typescriptreact" },
-    root_dir = vim.loop.cwd,
-    settings = {
-      documentFormatting = true,
-    },
-  },
+  -- denols = {
+  --   filetypes = { "javascript", "typescript", "typescriptreact" },
+  --   root_dir = vim.loop.cwd,
+  --   settings = {
+  --     documentFormatting = true,
+  --   },
+  -- },
   sumneko_lua = require("modules.lsp._sumneko").config,
   jsonls = require("modules.lsp._json").config,
   svelte = require("modules.lsp._svelte").config,

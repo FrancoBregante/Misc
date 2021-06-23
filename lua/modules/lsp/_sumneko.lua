@@ -1,4 +1,4 @@
-local sumneko_root = os.getenv("HOME") .. "/Repos/lua-language-server"
+local sumneko_root = os.getenv "HOME" .. "/Repos/lua-language-server"
 local library = {}
 local M = {}
 
@@ -10,8 +10,8 @@ local add = function(lib)
 end
 
 -- add libraris to get detected by sumneko_lua
-add("$VIMRUNTIME")
-add("~/.config/nvim")
+add "$VIMRUNTIME"
+add "~/.config/nvim"
 
 M.config = {
   cmd = {
@@ -29,6 +29,10 @@ M.config = {
   end,
   settings = {
     Lua = {
+      completion = {
+        enable = true,
+        callSnippet = "Replace",
+      },
       runtime = {
         version = "LuaJIT",
         path = (function()

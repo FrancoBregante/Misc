@@ -2,15 +2,21 @@ local M = {}
 
 M.plugin = {
   "nvim-treesitter/nvim-treesitter",
+  event = "BufRead",
   requires = {
     -- debug stuff
     {
       "nvim-treesitter/playground",
+      after = "nvim-treesitter",
       cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
     },
 
     -- moar textobjects
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      event = "BufRead",
+      after = "nvim-treesitter",
+    },
 
     -- context aware commentstring
     {
@@ -42,7 +48,7 @@ M.config = function()
     },
 
     indent = {
-      enable = true, -- wait until it's back to normal
+      enable = false, -- wait until it's back to normal
     },
 
     playground = {

@@ -2,6 +2,7 @@ local M = {}
 
 M.plugin = {
   "akinsho/nvim-bufferline.lua",
+  after = "nvim-web-devicons",
   config = function()
     require("plugins.nvim-bufferline").config()
   end,
@@ -11,7 +12,7 @@ M.config = function()
   require("bufferline").setup {
     options = {
       show_buffer_close_icons = false,
-      separator_style = "slant",
+      separator_style = "thick",
       diagnostics = "nvim_lsp",
       buffer_close_icon = "",
       close_icon = "",
