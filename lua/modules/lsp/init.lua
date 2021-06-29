@@ -1,7 +1,7 @@
 local lspconfig = require "lspconfig"
 
 -- override handlers
-pcall(require, "modules.lsp._handlers")
+pcall(require, "modules.lsp.handlers")
 
 local custom_capabilities = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -17,9 +17,9 @@ local servers = {
   --     documentFormatting = true,
   --   },
   -- },
-  sumneko_lua = require("modules.lsp._sumneko").config,
-  jsonls = require("modules.lsp._json").config,
-  svelte = require("modules.lsp._svelte").config,
+  sumneko_lua = require("modules.lsp.sumneko").config,
+  jsonls = require("modules.lsp.json").config,
+  svelte = require("modules.lsp.svelte").config,
   html = { cmd = { "html-languageserver", "--stdio" } },
   cssls = { cmd = { "css-languageserver", "--stdio" } },
   clangd = {},

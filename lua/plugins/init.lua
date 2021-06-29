@@ -1,13 +1,12 @@
-vim.cmd [[ packadd packer.nvim ]]
-
 local packer_ok, packer = pcall(require, "packer")
 if not packer_ok then
   return
 end
 
 packer.init({
+  compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
   git = {
-    clone_timeout = 300,
+    clone_timeout = 100,
   },
   display = {
     open_fn = function()
@@ -17,25 +16,58 @@ packer.init({
 })
 
 local plugins = {
-  { "wbthomason/packer.nvim", opt = true },
+  { "wbthomason/packer.nvim", opt = false },
 
-  require("plugins.compe").plugin,
-  require("plugins.gitsigns").plugin,
   require("plugins.null-ls").plugin,
-  require("plugins.nvim-bufferline").plugin,
   require("plugins.nvim-jdtls").plugin,
-  require("plugins.nvim-tree").plugin,
-  require("plugins.rest-nvim").plugin,
   require("plugins.rust-tools").plugin,
   require("plugins.flutter-tools").plugin,
   require("plugins.telescope").plugin,
   require("plugins.treesitter").plugin,
   require("plugins.tsserver").plugin,
-  require("plugins.which-key").plugin,
 
-  { "nvim-lua/plenary.nvim" },
+  { "tpope/vim-commentary", keys = "gc" },
 
-  { "nvim-lua/popup.nvim" },
+  {
+    "junegunn/vim-easy-align",
+    setup = function()
+      vim.api.nvim_set_keymap(
+        "x",
+        "ga",
+        "<Plug>(EasyAlign)",
+        { noremap = false, silent = true }
+      )
+    end,
+    keys = "<Plug>(EasyAlign)",
+  },
+
+  { "AndrewRadev/splitjoin.vim", keys = "gS" },
+
+  { "dhruvasagar/vim-table-mode", ft = { "text", "markdown" } },
+
+  { "machakann/vim-sandwich", keys = "s" },
+
+  {
+    "mhinz/vim-sayonara",
+    cmd = "Sayonara",
+    setup = function()
+      local map = function(lhs, rhs)
+        vim.api.nvim_set_keymap("", lhs, rhs, { noremap = true, silent = true })
+      end
+      map("<A-j>", "<CMD>Sayonara!<CR>")
+      map("<A-k>", "<CMD>Sayonara<CR>")
+    end,
+  },
+
+  {
+    "nvim-lua/plenary.nvim",
+    module = "plenary"
+  },
+
+  {
+    "nvim-lua/popup.nvim",
+    module = "popup"
+  },
 
   {
     "folke/tokyonight.nvim",
@@ -44,6 +76,71 @@ local plugins = {
       vim.cmd [[colorscheme tokyonight]]
       vim.g.tokyonight_style = "night"
     end
+  },
+
+  {
+    "folke/which-key.nvim",
+    module = "which-key",
+    config = function()
+      require "plugins.which-key"
+    end,
+  },
+
+  {
+    "NTBBloodbath/rest.nvim",
+    keys = "<Plug>RestNvim",
+    setup = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<Leader>rr",
+        "<Plug>RestNvim",
+        { noremap = false }
+      )
+    end,
+  },
+
+  {
+    "kyazdani42/nvim-tree.lua",
+    cmd = "NvimTreeToggle",
+    config = function()
+      require "plugins.nvim-tree"
+    end,
+  },
+
+  {
+    "hrsh7th/nvim-compe",
+    event = "InsertEnter",
+    wants = "LuaSnip",
+    config = function()
+      require "plugins.compe"
+    end,
+    requires = {
+      {
+        "L3MON4D3/LuaSnip",
+        opt = true,
+        config = function()
+          require "plugins.luasnip"
+        end,
+      },
+    },
+  },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    wants = {
+      "plenary.nvim",
+    },
+    event = "BufRead",
+    config = function()
+      require "plugins.gitsigns"
+    end,
+  },
+
+  {
+    "akinsho/nvim-bufferline.lua",
+    config = function()
+      require "plugins.nvim-bufferline"
+    end,
   },
 
   {
@@ -66,6 +163,14 @@ local plugins = {
   {
     "norcalli/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
+    setup = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<Leader>c",
+        "<CMD>ColorizerToggle<CR>",
+        { noremap = true, silent = true }
+      )
+    end,
     config = function()
       require("colorizer").setup {
         ["*"] = {
@@ -79,12 +184,15 @@ local plugins = {
 
   {
     "kyazdani42/nvim-web-devicons",
+    module = "nvim-web-devicons",
     config = function()
       require("nvim-web-devicons").setup { default = true }
     end,
     requires = {
-      -- requires nonicons font installed
-      { "yamatsum/nvim-nonicons", after = "nvim-web-devicons" },
+      {
+        "yamatsum/nvim-nonicons",
+        module = "nvim-nonicons"
+      },
     },
   },
 
@@ -109,19 +217,10 @@ local plugins = {
       }
     end,
     requires = {
-      {
-        "sindrets/diffview.nvim",
-        after = "neogit",
-      },
-    },
-  },
-
-  {
-    "mfussenegger/nvim-dap",
-    keys = "<Leader>d",
-    config = function()
-      require "modules.dap"
-    end,
+      "sindrets/diffview.nvim",
+      cmd = { "DiffViewOpen" },
+      module = "diffview"
+    }
   },
 
   {
@@ -141,14 +240,20 @@ local plugins = {
     end,
   },
 
-  { "tpope/vim-commentary", keys = "gc" },
+  {
+    "mfussenegger/nvim-dap",
+    keys = "<Leader>d",
+    config = function()
+      require "modules.dap"
+    end,
+  },
 
   {
     "mapkts/enwise",
     event = "BufRead",
     setup = function()
       vim.g.enwise_enable_globally = 1
-    end
+    end,
   },
 
   {
@@ -188,8 +293,6 @@ local plugins = {
     end,
   },
 
-  { "junegunn/vim-easy-align", keys = "<Plug>(EasyAlign)" },
-
   {
     "phaazon/hop.nvim",
     cmd = "HopWord",
@@ -206,12 +309,6 @@ local plugins = {
     end,
   },
 
-  { "AndrewRadev/splitjoin.vim", keys = "gS" },
-
-  { "dhruvasagar/vim-table-mode", ft = { "text", "markdown" } },
-
-  { "machakann/vim-sandwich", keys = "s" },
-
   {
     "andymass/vim-matchup",
     event = "CursorMoved",
@@ -223,8 +320,6 @@ local plugins = {
       }
     end,
   },
-
-  { "mhinz/vim-sayonara", cmd = "Sayonara" },
 
   require("plugins.lualine").plugin,
   {

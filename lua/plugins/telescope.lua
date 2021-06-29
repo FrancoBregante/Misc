@@ -2,15 +2,24 @@ local M = {}
 
 M.plugin = {
   "nvim-telescope/telescope.nvim",
-  after = "nvim-web-devicons",
+  module = "telescope",
+  keys = {
+    {"", "<C-p>"},
+    {"", "<C-f>"},
+    {"n", "<Leader>f"}
+  },
   requires = {
     {
       "nvim-telescope/telescope-media-files.nvim",
-      after = "telescope.nvim"
+      after = "telescope.nvim",
     },
     {
       "nvim-telescope/telescope-frecency.nvim",
-      after = "telescope.nvim"
+      after = "telescope.nvim",
+      requires = {
+        -- lua sqlite binding
+        "tami5/sql.nvim",
+      },
     },
     {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -18,9 +27,8 @@ M.plugin = {
     },
     {
       "nvim-telescope/telescope-dap.nvim",
-      after = "telescope.nvim"
+      after = "telescope.nvim",
     },
-    { "tami5/sql.nvim" },
   },
   config = function()
     require("plugins.telescope").config()
