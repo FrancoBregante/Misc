@@ -80,7 +80,6 @@ local plugins = {
 
   {
     "folke/which-key.nvim",
-    module = "which-key",
     config = function()
       require "plugins.which-key"
     end,

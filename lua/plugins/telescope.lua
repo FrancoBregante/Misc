@@ -8,26 +8,31 @@ M.plugin = {
     {"", "<C-f>"},
     {"n", "<Leader>f"}
   },
+  wants = {
+    "popup.nvim",
+    "plenary.nvim",
+    "telescope-fzf-native.nvim",
+    "telescope-frecency.nvim",
+  },
   requires = {
     {
       "nvim-telescope/telescope-media-files.nvim",
-      after = "telescope.nvim",
+      opt = true
     },
     {
       "nvim-telescope/telescope-frecency.nvim",
-      after = "telescope.nvim",
+      opt = true,
       requires = {
-        -- lua sqlite binding
-        "tami5/sql.nvim",
+        {
+          "tami5/sql.nvim",
+          module = "sql",
+        },
       },
     },
     {
       "nvim-telescope/telescope-fzf-native.nvim",
+      opt = true,
       run = "make",
-    },
-    {
-      "nvim-telescope/telescope-dap.nvim",
-      after = "telescope.nvim",
     },
   },
   config = function()
