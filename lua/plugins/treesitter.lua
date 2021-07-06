@@ -3,29 +3,23 @@ local M = {}
 M.plugin = {
   "nvim-treesitter/nvim-treesitter",
   event = "BufRead",
+  opt = true,
   requires = {
     -- debug stuff
     {
       "nvim-treesitter/playground",
-      after = "nvim-treesitter",
       cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
     },
 
     -- moar textobjects
-    {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      after = "nvim-treesitter",
-    },
+    "nvim-treesitter/nvim-treesitter-textobjects",
 
     -- context aware commentstring
-    {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "vim-commentary",
-    },
+    "JoosepAlviste/nvim-ts-context-commentstring",
   },
   config = function()
     require("plugins.treesitter").config()
-  end
+  end,
 }
 
 M.config = function()
@@ -33,26 +27,31 @@ M.config = function()
 
   ts_config.setup {
     ensure_installed = {
-      "javascript", "typescript", "tsx", "jsdoc", "cpp", "jsonc",
-      "html", "css", "lua", "c", "rust", "go", "java", "query", "python",
-      "rst", "svelte", "json", "comment",
+      "javascript",
+      "typescript",
+      "tsx",
+      "jsdoc",
+      "cpp",
+      "jsonc",
+      "html",
+      "css",
+      "lua",
+      "c",
+      "rust",
+      "go",
+      "java",
+      "query",
+      "python",
+      "rst",
+      "svelte",
+      "json",
+      "comment",
     },
 
-    matchup = {
-      enable = true,
-    },
-
-    highlight = {
-      enable = true,
-    },
-
-    indent = {
-      enable = false, -- wait until it's back to normal
-    },
-
-    playground = {
-      enable = true,
-    },
+    matchup = { enable = true },
+    highlight = { enable = true },
+    indent = { enable = false }, -- wait until it's back to normal
+    playground = { enable = true },
 
     context_commentstring = {
       enable = true,

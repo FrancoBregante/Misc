@@ -4,7 +4,8 @@ if not packer_ok then
 end
 
 packer.init({
-  compile_path = vim.fn.stdpath('data')..'/site/pack/loader/start/packer.nvim/plugin/packer_compiled.vim',
+  compile_path = vim.fn.stdpath "data"
+    .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
   git = {
     clone_timeout = 100,
   },
@@ -61,12 +62,12 @@ local plugins = {
 
   {
     "nvim-lua/plenary.nvim",
-    module = "plenary"
+    module = "plenary",
   },
 
   {
     "nvim-lua/popup.nvim",
-    module = "popup"
+    module = "popup",
   },
 
   {
@@ -187,12 +188,6 @@ local plugins = {
     config = function()
       require("nvim-web-devicons").setup { default = true }
     end,
-    requires = {
-      {
-        "yamatsum/nvim-nonicons",
-        module = "nvim-nonicons"
-      },
-    },
   },
 
   { "sindrets/diffview.nvim" },
@@ -218,8 +213,8 @@ local plugins = {
     requires = {
       "sindrets/diffview.nvim",
       cmd = { "DiffViewOpen" },
-      module = "diffview"
-    }
+      module = "diffview",
+    },
   },
 
   {
@@ -244,14 +239,6 @@ local plugins = {
     keys = "<Leader>d",
     config = function()
       require "modules.dap"
-    end,
-  },
-
-  {
-    "mapkts/enwise",
-    event = "BufRead",
-    setup = function()
-      vim.g.enwise_enable_globally = 1
     end,
   },
 
@@ -310,7 +297,7 @@ local plugins = {
 
   {
     "andymass/vim-matchup",
-    event = "CursorMoved",
+    event = "BufRead",
     setup = function()
       vim.g.matchup_matchparen_offscreen = {
         method = "popup",
@@ -332,6 +319,10 @@ local plugins = {
   {
     "MTDL9/vim-log-highlighting",
     ft = "log",
+  },
+  {
+    "TovarishFin/vim-solidity",
+    ft = "sol",
   },
 }
 

@@ -3,6 +3,7 @@ local M = {}
 M.plugin = {
   "nvim-telescope/telescope.nvim",
   module = "telescope",
+  cmd = "Telescope",
   keys = {
     {"", "<C-p>"},
     {"", "<C-f>"},
@@ -13,6 +14,7 @@ M.plugin = {
     "plenary.nvim",
     "telescope-fzf-native.nvim",
     "telescope-frecency.nvim",
+    "telescope-media-files.nvim",
   },
   requires = {
     {
@@ -70,7 +72,9 @@ M.config = function()
         results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
         preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
       },
-      width = 0.8,
+      layout_config = {
+        width = 0.6,
+      },
       previewer = false,
     }
   end
@@ -84,15 +88,14 @@ M.config = function()
       selection_strategy = "reset",
       layout_strategy = "flex",
       borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-      layout_defaults = {
+      layout_config = {
         horizontal = {
-          width_padding = 0.1,
-          height_padding = 0.1,
+          width = 0.8,
+          height = 0.8,
           preview_width = 0.6,
         },
         vertical = {
-          width_padding = 0.05,
-          height_padding = 1,
+          height = 0.8,
           preview_height = 0.5,
         },
       },
@@ -106,7 +109,7 @@ M.config = function()
           ["<C-t>"] = actions.select_tab,
 
           ["<C-c>"] = actions.close,
-          ["<Esc>"] = actions.close,
+          -- ["<Esc>"] = actions.close,
 
           ["<C-u>"] = actions.preview_scrolling_up,
           ["<C-d>"] = actions.preview_scrolling_down,

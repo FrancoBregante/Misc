@@ -36,6 +36,7 @@ local servers = {
   },
   pyright = {},
   texlab = {},
+  angularls = {},
 }
 
 for name, opts in pairs(servers) do
