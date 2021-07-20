@@ -2,10 +2,6 @@ local M = {}
 
 M.plugin = {
   "akinsho/flutter-tools.nvim",
-  ft = "flutter",
-  wants = {
-    "nvim-lspconfig",
-  },
   config = function()
     require("plugins.flutter-tools").config()
   end

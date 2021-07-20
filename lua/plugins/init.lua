@@ -27,6 +27,8 @@ local plugins = {
   require("plugins.treesitter").plugin,
   require("plugins.tsserver").plugin,
 
+  { "dart-lang/dart-vim-plugin" },
+
   { "tpope/vim-commentary", keys = "gc" },
 
   {
@@ -83,6 +85,16 @@ local plugins = {
     "folke/which-key.nvim",
     config = function()
       require "plugins.which-key"
+    end,
+  },
+
+  {
+    "ruifm/gitlinker.nvim",
+    key = "gy",
+    config = function()
+      require("gitlinker").setup {
+        mappings = "gy",
+      }
     end,
   },
 
@@ -145,7 +157,6 @@ local plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    event = "BufRead",
     config = function()
       require "modules.lsp"
     end,
@@ -297,7 +308,7 @@ local plugins = {
 
   {
     "andymass/vim-matchup",
-    event = "BufRead",
+    after = "nvim-treesitter",
     setup = function()
       vim.g.matchup_matchparen_offscreen = {
         method = "popup",

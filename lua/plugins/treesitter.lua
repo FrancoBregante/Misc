@@ -2,6 +2,7 @@ local M = {}
 
 M.plugin = {
   "nvim-treesitter/nvim-treesitter",
+  module = "nvim-treesitter",
   event = "BufRead",
   opt = true,
   requires = {
@@ -25,6 +26,16 @@ M.plugin = {
 M.config = function()
   local ts_config = require "nvim-treesitter.configs"
 
+  local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+  parser_config.svelte = {
+    install_info = {
+      url = "~/repos/tree-sitter-svelte",
+      files = {"src/parser.c", "src/scanner.c"}
+    },
+    filetype = "svelte", -- if filetype does not agrees with parser name
+    used_by = {"svelte"} -- additional filetypes that use this parser
+  }
+
   ts_config.setup {
     ensure_installed = {
       "javascript",
@@ -43,7 +54,7 @@ M.config = function()
       "query",
       "python",
       "rst",
-      "svelte",
+      -- "svelte",
       "json",
       "comment",
     },

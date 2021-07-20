@@ -13,7 +13,6 @@ local copy = function(args)
   return args[1]
 end
 
-
 local react = {
   ls.parser.parse_snippet(
     { trig = "rfc" },
@@ -56,19 +55,37 @@ class _$1 extends State<$1> {
   ),
 }
 
+local go = {
+  ls.parser.parse_snippet(
+    { trig = "main" },
+    [[
+func main() {
+  $0
+}
+    ]]
+  ),
+  ls.parser.parse_snippet(
+    { trig = "ife" },
+    [[
+if err != nil {
+  return $0
+}
+    ]]
+  ),
+}
+
 ls.snippets = {
   all = {
     ls.parser.parse_snippet({ trig = "todo" }, "TODO(elianiva): ${1:todo}"),
     ls.parser.parse_snippet({ trig = "fixme" }, "FIXME(elianiva): ${1:fixme}"),
-    s({ trig = "date" }, {
-      t { vim.fn.strftime "%FT%T" },
-    }),
+    s({ trig = "date" }, { t { vim.fn.strftime "%F-%T" } }),
   },
   php = {
     ls.parser.parse_snippet({ trig = "php" }, "<?php $0 ?>"),
     ls.parser.parse_snippet({ trig = "phpp" }, "<?= $0 ?>"),
   },
   dart = dart,
+  go = go,
   javascriptreact = react,
   typescriptreact = react,
   tex = {
@@ -89,9 +106,9 @@ ls.snippets = {
 }
 
 vim.cmd [[
-  imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
-  inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
+  snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(1)<CR>
+  snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<CR>
+  imap <silent><expr> <C-j> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-k>'
+  inoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<CR>
   imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
-  snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(1)<CR>
-  snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(-1)<CR>
 ]]

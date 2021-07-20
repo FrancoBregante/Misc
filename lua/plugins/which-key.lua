@@ -13,7 +13,12 @@ wk.register({
     name = "+Telescope",
     f = "Frecency",
     b = "Buffer Fuzzy",
-    l = "File Browser",
+    g = "Git Commits",
+    t = "Builtins",
+    l = {
+      name = "+LSP",
+      s = "Workspace Symbols",
+    }
   },
   g = {
     name = "+LSP",
@@ -22,6 +27,7 @@ wk.register({
     r = "Symbol Reference(s)",
     R = "Rename Symbol",
     D = "Show Line Diagnostic",
+    l = "Run codelense",
     ["]"] = "Next Diagnostic",
     ["["] = "Prev Diagnostic",
   },
@@ -62,6 +68,7 @@ wk.register({
 
 wk.register {
   gc = "Comments",
+  gy = "Copy Github Link",
   gJ = "Join Multiline",
   gS = "Split Into Multiline",
 
